@@ -12,4 +12,8 @@ public class ChargerAgent extends Agent {
      * Waiting time in miliseconds
      */
     private long waitingTime;
+    public ChargerAgent(){
+        this.waitingTime = 0;
+
+    }
 }
