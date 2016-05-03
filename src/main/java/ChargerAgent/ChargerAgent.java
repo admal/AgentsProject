@@ -2,7 +2,6 @@ package ChargerAgent;
 
 import Common.AgentType;
 import Common.Behaviours.RegisterBehaviour;
-import Common.IPosition;
 import Common.Position;
 import jade.core.Agent;
 

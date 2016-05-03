@@ -27,4 +27,15 @@ public class CarAgent extends Agent {
         addBehaviour(registerBehaviour);
     }
 
+    public IPosition getCurrentPosition() {
+        return currentPosition;
+    }
+
+    public void setDestination(IPosition destination) {
+        this.destination = destination;
+    }
+
+    public IPosition getDestination() {
+        return destination;
+    }
 }
