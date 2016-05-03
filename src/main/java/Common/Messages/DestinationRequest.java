@@ -20,12 +20,12 @@ public class DestinationRequest extends Message implements ICarHandable {
 
     public void Handle(CarAgent agent, ACLMessage original) {
         System.out.println(agent.getLocalName() + ": Destination request handled");
-        if(agent.getDestination() == null) //it means that car is free
+        if(!agent.isInMove()) //it means that car is free
         {
             ACLMessage acceptResponse = new ACLMessage(ACLMessage.ACCEPT_PROPOSAL);
             acceptResponse.addReceiver(original.getSender());
             try {
-                acceptResponse.setContentObject(new DestinationResponse(agent.getCurrentPosition()));
+                acceptResponse.setContentObject(new DestinationResponse(agent.getCurrentPosition(), agent.getAID(), true));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -37,7 +37,7 @@ public class DestinationRequest extends Message implements ICarHandable {
             ACLMessage rejectResponse = new ACLMessage(ACLMessage.REJECT_PROPOSAL);
             rejectResponse.setOntology("DestinationResponse");
             try {
-                rejectResponse.setContentObject(new DestinationResponse(null));
+                rejectResponse.setContentObject(new DestinationResponse(null, agent.getAID(), false));
             } catch (IOException e) {
                 e.printStackTrace();
             }

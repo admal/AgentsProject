@@ -21,7 +21,7 @@ public class UpdateBehaviour extends CyclicBehaviour{
                 e.printStackTrace();
             }
         }else{
-            block();
+           // block();
         }
 
     }

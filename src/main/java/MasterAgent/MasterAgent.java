@@ -35,6 +35,11 @@ public class MasterAgent extends Agent {
         carsInCurrentTransaction = new ArrayList<TransactionCar>();
 
         addBehaviour(new UpdateBehaviour());
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         addBehaviour(new NewClientRequestBehaviour(this)); //send a new client location to all cars
 
     }

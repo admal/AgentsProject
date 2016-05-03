@@ -27,6 +27,7 @@ public class NewClientRequestBehaviour extends OneShotBehaviour {
     }
 
     public void action() {
+        System.out.println("Start sending...");
         MasterAgent master = (MasterAgent )myAgent;
         if(master.cars.size()==0)
             return;
