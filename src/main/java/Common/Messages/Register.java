@@ -10,6 +10,8 @@ import MasterAgent.MasterAgent;
 import jade.core.AID;
 import jade.lang.acl.ACLMessage;
 
+import java.io.IOException;
+
 /**
  * Created by adam on 5/3/16.
  */
@@ -44,6 +46,15 @@ public class Register extends Message implements IMasterHandable
             default:
                 System.out.println("Unknown type of agent");
         }
+        //respond with RegisterResponse
+        ACLMessage responseMsg = msg.createReply();
+        try {
+            responseMsg.setContentObject(new RegisterResponse(true, agent.chargingStations));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        agent.send(responseMsg);
+        System.out.println("Master sent back RegisterResponse with the list of ChargingStations");
     }
 }
 
