@@ -2,6 +2,7 @@ package ChargerAgent.Behaviours;
 
 import ChargerAgent.ChargerAgent;
 import Common.Abstract.IChargerHandable;
+import jade.core.Agent;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.UnreadableException;
@@ -11,6 +12,9 @@ import jade.lang.acl.UnreadableException;
  * Created by janbaraniewski on 03/05/16.
  */
 public class ReceiveMessageBehaviour extends CyclicBehaviour{
+    public ReceiveMessageBehaviour(Agent a){
+        super(a);
+    }
     public void action() {
         ACLMessage msg = myAgent.receive();
         if(msg!=null){

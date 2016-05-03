@@ -1,6 +1,7 @@
 package ChargerAgent;
 
 import ChargerAgent.Behaviours.ReceiveMessageBehaviour;
+import ChargerAgent.Behaviours.UpdateWaitingTimeBehaviour;
 import Common.AgentType;
 import Common.Behaviours.RegisterBehaviour;
 import Common.Position;
@@ -19,7 +20,8 @@ public class ChargerAgent extends Agent {
         this.waitingTime = 0;
         this.position = new Position(2,1);
         this.addBehaviour(new RegisterBehaviour(this, AgentType.ChargingStation,position));
-        this.addBehaviour(new ReceiveMessageBehaviour());
+        this.addBehaviour(new ReceiveMessageBehaviour(this));
+        this.addBehaviour(new UpdateWaitingTimeBehaviour(this,1000));
     }
     public long getWaitingTime(){
         return this.waitingTime;
@@ -27,5 +29,7 @@ public class ChargerAgent extends Agent {
     public void addToWaitingTime(long additionalTime){
         this.waitingTime+=additionalTime;
     }
-
+    public void onTick(){
+        if(waitingTime-1>=0) waitingTime-=1;
+    }
 }
