@@ -2,6 +2,7 @@ package Common.Behaviours;
 
 import Common.AgentType;
 import Common.Abstract.IPosition;
+import Common.Globals;
 import Common.Messages.Register;
 import jade.core.AID;
 import jade.core.Agent;
@@ -17,8 +18,6 @@ public class RegisterBehaviour extends OneShotBehaviour {
     private AgentType type;
     private IPosition currPos;
 
-    private final AID MASTER = new AID("master",AID.ISLOCALNAME);
-
     public RegisterBehaviour(Agent a, AgentType type, IPosition currPos) {
         super(a);
         this.type = type;
@@ -29,7 +28,7 @@ public class RegisterBehaviour extends OneShotBehaviour {
         ACLMessage registerMessage = new ACLMessage(ACLMessage.INFORM);
         registerMessage.setOntology("Register");
         Register register = new Register(type, myAgent.getAID(), currPos);
-        registerMessage.addReceiver(MASTER);
+        registerMessage.addReceiver(Globals.getInstance().MASTER);
         try {
             registerMessage.setContentObject(register);
         } catch (IOException e) {
