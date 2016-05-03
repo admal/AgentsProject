@@ -4,10 +4,12 @@ import Common.Abstract.IPosition;
 import Common.Position;
 import jade.core.AID;
 
+import java.io.Serializable;
+
 /**
  * Created by jedrek on 03.05.16.
  */
-public class ChargingStation {
+public class ChargingStation implements Serializable{
     public AID getAid() {
         return aid;
     }

@@ -5,6 +5,7 @@ import ChargerAgent.Behaviours.UpdateWaitingTimeBehaviour;
 import Common.AgentType;
 import Common.Behaviours.RegisterBehaviour;
 import Common.Position;
+import com.sun.tools.doclets.formats.html.SourceToHTMLConverter;
 import jade.core.Agent;
 
 /**
@@ -13,7 +14,7 @@ import jade.core.Agent;
 public class ChargerAgent extends Agent {
     private Position position;
     /**
-     * Waiting time in miliseconds
+     * Waiting time in seconds
      */
     private long waitingTime;
     public ChargerAgent(){
@@ -28,6 +29,7 @@ public class ChargerAgent extends Agent {
     }
     public void addToWaitingTime(long additionalTime){
         this.waitingTime+=additionalTime;
+        System.out.println("Waiting time changed to "+waitingTime);
     }
     public void onTick(){
         if(waitingTime-1>=0) waitingTime-=1;

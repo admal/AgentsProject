@@ -23,7 +23,7 @@ public class ReceivingBehaviour extends CyclicBehaviour {
             try {
                 ICarHandable handable = (ICarHandable) msg.getContentObject();
                 if (handable != null)
-                    handable.Handle((CarAgent)myAgent);
+                    handable.Handle((CarAgent)myAgent, msg);
                 else
                     System.out.println("Unknown message!");
 

@@ -14,7 +14,7 @@ import jade.lang.acl.ACLMessage;
 public class DestinationResponse extends Message implements IMasterHandable {
     IPosition position;
 
-    public DestinationResponse(Position position) {
+    public DestinationResponse(IPosition position) {
         this.position = position;
     }
 
