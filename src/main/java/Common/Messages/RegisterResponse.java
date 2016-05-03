@@ -10,10 +10,12 @@ import jade.lang.acl.ACLMessage;
 public class RegisterResponse extends Message implements ICarHandable
 {
     public boolean registered;
-
     public void Handle(CarAgent agent, ACLMessage original) {
-        if (!registered)
+        if (!registered) {
             agent.doDelete();
+            return;
+        }
+
         System.out.println( agent.getLocalName() + ": Registered");
     }
 }

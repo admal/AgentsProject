@@ -26,11 +26,14 @@ public class NewClientRequestBehaviour extends TickerBehaviour {
     }
 
     protected void onTick() {
+        MasterAgent master = (MasterAgent )myAgent;
+        if(master.cars.size()==0)
+            return;
         ACLMessage msg = new ACLMessage(ACLMessage.REQUEST);
         try {
 
-            for(int i=0; i<MasterAgent.cars.size(); i++){
-                msg.addReceiver(MasterAgent.cars.get(i).getAid());
+            for(int i=0; i<master.cars.size(); i++){
+                msg.addReceiver(master.cars.get(i).getAid());
             }
             Random r = new Random();
             Position pos = new Position(r.nextInt()%Globals.getInstance().MAX_WIDTH+1, r.nextInt()%Globals.getInstance().MAX_HEIGHT+1);

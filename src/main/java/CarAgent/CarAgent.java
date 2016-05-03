@@ -1,11 +1,15 @@
 package CarAgent;
 
+import CarAgent.Behaviours.ReceivingBehaviour;
+import Common.AgentClasses.ChargingStation;
 import Common.AgentType;
 import Common.Behaviours.RegisterBehaviour;
 import Common.Abstract.IPosition;
 import Common.Position;
-import jade.core.AID;
 import jade.core.Agent;
+
+import java.util.List;
+
 
 /**
  * Created by adam on 5/3/16.
@@ -17,6 +21,13 @@ public class CarAgent extends Agent {
     private float chargedLevel;
     private boolean inMove = false;
 
+    private List<ChargingStation> stations;
+
+
+    public void UpdateStations(List<ChargingStation> stations)
+    {
+        this.stations = stations;
+    }
     public boolean isInMove() {
         return inMove;
     }
@@ -44,6 +55,7 @@ public class CarAgent extends Agent {
     {
         RegisterBehaviour registerBehaviour = new RegisterBehaviour(this, AgentType.Car,currentPosition);
         addBehaviour(registerBehaviour);
+        addBehaviour(new ReceivingBehaviour(this));
     }
 
     public IPosition getCurrentPosition() {
