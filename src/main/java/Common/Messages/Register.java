@@ -49,6 +49,17 @@ public class Register extends Message implements IMasterHandable
         //respond with RegisterResponse
         ACLMessage responseMsg = msg.createReply();
         try {
+//            System.out.println("Stations:");
+//            for (ChargingStation station :
+//                    agent.chargingStations) {
+//                System.out.println(station.getAid().getLocalName());
+//            }
+            for (Car car :
+                    agent.cars) {
+                responseMsg.addReceiver(car.getAid());
+            }
+
+
             responseMsg.setContentObject(new RegisterResponse(true, agent.chargingStations));
         } catch (IOException e) {
             e.printStackTrace();

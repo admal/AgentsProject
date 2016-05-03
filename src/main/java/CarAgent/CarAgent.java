@@ -1,5 +1,6 @@
 package CarAgent;
 
+import CarAgent.Behaviours.CheckingFuelBehaviour;
 import CarAgent.Behaviours.ReceivingBehaviour;
 import Common.AgentClasses.ChargingStation;
 import Common.AgentType;
@@ -28,6 +29,11 @@ public class CarAgent extends Agent {
     {
         this.stations = stations;
     }
+
+    public List<ChargingStation> getStations() {
+        return stations;
+    }
+
     public boolean isInMove() {
         return inMove;
     }
@@ -47,7 +53,7 @@ public class CarAgent extends Agent {
     public CarAgent()
     {
         currentPosition = new Position(20, 10);
-        chargedLevel = 1900;
+        chargedLevel = 24;
         Register();
     }
 
@@ -56,6 +62,7 @@ public class CarAgent extends Agent {
         RegisterBehaviour registerBehaviour = new RegisterBehaviour(this, AgentType.Car,currentPosition);
         addBehaviour(registerBehaviour);
         addBehaviour(new ReceivingBehaviour(this));
+        addBehaviour(new CheckingFuelBehaviour(this,1000));
     }
 
     public IPosition getCurrentPosition() {
@@ -64,6 +71,7 @@ public class CarAgent extends Agent {
 
     public void setDestination(IPosition destination) {
         this.destination = destination;
+        this.inMove = true;
     }
 
     public IPosition getDestination() {

@@ -21,7 +21,7 @@ public class RegisterResponse extends Message implements ICarHandable, IChargerH
             agent.doDelete();
             return;
         }
-
+        agent.UpdateStations(chargingStations);
         System.out.println( agent.getLocalName() + ": Registered");
     }
     public List<ChargingStation> chargingStations;

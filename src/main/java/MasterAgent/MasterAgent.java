@@ -27,7 +27,7 @@ public class MasterAgent extends Agent {
         parkings = new ArrayList<Parking>();
 
         addBehaviour(new UpdateBehaviour());
-        addBehaviour(new NewClientRequestBehaviour(this, 5000));
+        //addBehaviour(new NewClientRequestBehaviour(this, 5000));
 
     }
 }

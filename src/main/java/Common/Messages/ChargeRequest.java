@@ -15,5 +15,6 @@ public class ChargeRequest extends Message implements IChargerHandable{
     }
     public void Handle(ChargerAgent agent) {
         agent.addBehaviour(new SendChargeResponseBehaviour(agent,this.agentId));
+        System.out.println(agent.getLocalName() + ": new charge request");
     }
 }
