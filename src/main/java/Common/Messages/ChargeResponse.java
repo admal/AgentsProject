@@ -8,5 +8,4 @@ public class ChargeResponse extends Message {
     public ChargeResponse(int waitingTime){
         this.waitingTime = waitingTime;
     }
-
 }
