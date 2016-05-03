@@ -16,6 +16,7 @@ public class DestinationAcceptance extends Message implements ICarHandable {
     }
 
     public void Handle(CarAgent agent, ACLMessage original) {
+        System.out.println( agent.getLocalName() + ": Destination set");
         agent.setDestination(clientPosition);
     }
 }

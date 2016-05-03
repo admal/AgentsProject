@@ -19,6 +19,7 @@ public class DestinationRequest extends Message implements ICarHandable {
     }
 
     public void Handle(CarAgent agent, ACLMessage original) {
+        System.out.println(agent.getLocalName() + ": Destination request handled");
         if(agent.getDestination() == null) //it means that car is free
         {
             ACLMessage acceptResponse = new ACLMessage(ACLMessage.ACCEPT_PROPOSAL);
