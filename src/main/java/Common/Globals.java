@@ -12,7 +12,7 @@ public class Globals
     public final int MAX_WIDTH = 200;
     public final int MAX_HEIGHT = 200;
     protected Globals(){}
-    public Globals getInstance()
+    public static Globals getInstance()
     {
         if (instance == null)
             instance = new Globals();
