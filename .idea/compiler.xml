@@ -23,12 +23,10 @@
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
         <module name="agent-project" />
-        <module name="AgentsProject" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="agent-project" target="1.5" />
-      <module name="AgentsProject" target="1.5" />
     </bytecodeTargetLevel>
   </component>
 </project>
