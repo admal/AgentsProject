@@ -6,9 +6,10 @@ import jade.core.AID;
 /**
  * Created by jedrek on 03.05.16.
  */
-public class Car {
+public class TransactionCar {
     private AID aid;
     private IPosition position;
+    private boolean participates;
 
     public AID getAid() {
         return aid;
@@ -18,8 +19,9 @@ public class Car {
         this.aid = aid;
     }
 
-    public Car(AID aid, IPosition position) {
+    public TransactionCar(AID aid, IPosition position, boolean participates) {
         this.aid = aid;
         this.position = position;
+        this.participates = participates;
     }
 }

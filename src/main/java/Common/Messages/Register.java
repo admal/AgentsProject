@@ -32,7 +32,7 @@ public class Register extends Message implements IMasterHandable
 
         switch(type){
             case Car:
-                agent.cars.add(new Car(agentId));
+                agent.cars.add(new Car(agentId, currPosition));
                 System.out.println("Car registered.");
                 break;
             case ChargingStation:
@@ -65,7 +65,9 @@ public class Register extends Message implements IMasterHandable
             e.printStackTrace();
         }
         agent.send(responseMsg);
-        System.out.println("Master sent back RegisterResponse with the list of ChargingStations");
+        System.out.println("Master sent back RegisterResponse");
+
+
     }
 }
 
