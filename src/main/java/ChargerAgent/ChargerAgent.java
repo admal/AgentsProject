@@ -5,7 +5,6 @@ import ChargerAgent.Behaviours.UpdateWaitingTimeBehaviour;
 import Common.AgentType;
 import Common.Behaviours.RegisterBehaviour;
 import Common.Position;
-import com.sun.tools.doclets.formats.html.SourceToHTMLConverter;
 import jade.core.Agent;
 
 /**

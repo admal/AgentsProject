@@ -32,7 +32,7 @@ public class Register extends Message implements IMasterHandable
 
         switch(type){
             case Car:
-                agent.cars.add(new Car(agentId));
+                agent.cars.add(new Car(agentId, currPosition));
                 System.out.println("Car registered.");
                 break;
             case ChargingStation:
