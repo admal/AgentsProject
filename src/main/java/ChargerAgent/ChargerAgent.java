@@ -1,5 +1,8 @@
 package ChargerAgent;
 
+import Common.AgentType;
+import Common.Behaviours.RegisterBehaviour;
+import Common.IPosition;
 import Common.Position;
 import jade.core.Agent;
 
@@ -15,8 +18,10 @@ public class ChargerAgent extends Agent {
     public ChargerAgent(){
         this.waitingTime = 0;
         this.position = new Position(2,1);
+        this.addBehaviour(new RegisterBehaviour(this, AgentType.ChargingStation,position));
     }
-
-
+    public long getWaitingTime(){
+        return this.waitingTime;
+    }
 
 }
