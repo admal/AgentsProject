@@ -14,5 +14,11 @@ public class Register extends Message
     public AgentType type;
     public AID agentId;
     public IPosition currPosition;
+
+    public Register(AgentType type, AID agentId, IPosition currPosition) {
+        this.type = type;
+        this.agentId = agentId;
+        this.currPosition = currPosition;
+    }
 }
 
