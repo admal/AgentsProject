@@ -1,7 +1,7 @@
 package Common.Behaviours;
 
 import Common.AgentType;
-import Common.IPosition;
+import Common.Abstract.IPosition;
 import Common.Messages.Register;
 import jade.core.AID;
 import jade.core.Agent;

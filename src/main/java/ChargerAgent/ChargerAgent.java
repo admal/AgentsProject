@@ -1,6 +1,5 @@
 package ChargerAgent;
 
-import Common.IPosition;
 import Common.Position;
 import jade.core.Agent;
 

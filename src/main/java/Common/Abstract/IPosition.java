@@ -1,4 +1,4 @@
-package Common;
+package Common.Abstract;
 
 /**
  * Created by adam on 5/3/16.

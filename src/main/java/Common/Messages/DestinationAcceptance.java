@@ -1,6 +1,6 @@
 package Common.Messages;
 
-import Common.IPosition;
+import Common.Abstract.IPosition;
 
 /**
  * Created by jedrek on 03.05.16.

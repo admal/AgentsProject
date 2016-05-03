@@ -1,5 +1,7 @@
 package Common;
 
+import Common.Abstract.IPosition;
+
 /**
  * Created by janbaraniewski on 03/05/16.
  */
