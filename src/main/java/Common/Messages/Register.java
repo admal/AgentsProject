@@ -54,7 +54,9 @@ public class Register extends Message implements IMasterHandable
             e.printStackTrace();
         }
         agent.send(responseMsg);
-        System.out.println("Master sent back RegisterResponse with the list of ChargingStations");
+        System.out.println("Master sent back RegisterResponse");
+
+
     }
 }
 

@@ -18,10 +18,11 @@ public class MasterAgent extends Agent {
     public static List<Position> cientsLocations;
     public static List<ChargingStation> chargingStations;
     public static List<Parking> parkings;
+    public static Position currentClientPosition;
     @Override
     protected void setup() {
         addBehaviour(new UpdateBehaviour());
-        addBehaviour(new NewClientRequestBehaviour(this, 5000));
+        addBehaviour(new NewClientRequestBehaviour(this)); //send a new client location to all cars
 
     }
 }
