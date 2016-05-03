@@ -1,5 +1,5 @@
 package Common;
 
 public enum AgentType {
-    Car, ChargingStation, Parging
+    Car, ChargingStation, Parking
 }
