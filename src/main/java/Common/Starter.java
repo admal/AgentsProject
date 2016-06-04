@@ -1,13 +1,11 @@
-import Common.AgentClasses.Car;
-import Common.AgentClasses.ChargingStation;
-import Common.Position;
+package Common;
+
 import MasterAgent.MasterAgent;
 import jade.core.Profile;
 import jade.core.ProfileImpl;
 import jade.core.Runtime;
 import jade.wrapper.AgentContainer;
 import jade.wrapper.AgentController;
-import jade.wrapper.ControllerException;
 import jade.wrapper.StaleProxyException;
 
 import java.util.ArrayList;
@@ -65,6 +63,7 @@ public class Starter
                 e.printStackTrace();
             }
         }
+        
 
         try {
             return masterAgent.getO2AInterface(MasterAgent.class);

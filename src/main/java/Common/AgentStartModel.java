@@ -1,3 +1,5 @@
+package Common;
+
 import Common.Abstract.IPosition;
 
 /**
