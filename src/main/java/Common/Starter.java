@@ -24,7 +24,7 @@ public class Starter
         Runtime runtime = Runtime.instance();
         runtime.setCloseVM(true);
         //create main container
-        AgentContainer mainContainer = runtime.createMainContainer(new ProfileImpl());
+        AgentContainer mainContainer = runtime.createMainContainer(new ProfileImpl(null, 8888, null));
         //create container with agents
         Profile profile = new ProfileImpl();
         profile.setParameter("container-name","Container1");
