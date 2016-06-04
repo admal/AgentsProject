@@ -22,4 +22,12 @@ public class Car {
         this.aid = aid;
         this.position = position;
     }
+
+    public IPosition getPosition() {
+        return position;
+    }
+
+    public void setPosition(IPosition position) {
+        this.position = position;
+    }
 }
