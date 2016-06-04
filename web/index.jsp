@@ -7,9 +7,12 @@
     <link rel="stylesheet" href="assets/css/bootstrap.css" />
     <link rel="stylesheet" href="assets/css/bootstrap-theme.css">
 </head>
-<body>
+<body ng-app="app">
 
-saasasas
+<div class="container">
+    <div ng-view>
+    </div>
+</div>
 
     <!--LIBRARIES-->
     <script src="assets/js/jquery-2.2.4.js"></script>
