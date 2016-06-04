@@ -11,6 +11,7 @@ import jade.core.AID;
 import jade.lang.acl.ACLMessage;
 
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -20,9 +21,10 @@ import java.util.Map;
  * Reads messages from cars if all sent their position chooses the best to go to client and sends to it the client's position.
  */
 public class DestinationResponse extends Message implements IMasterHandable {
-    IPosition position;
-    AID aid;
-    boolean participate;
+    private IPosition position;
+    private AID aid;
+    private boolean participate;
+    private MasterAgent agent;
 
     public DestinationResponse(IPosition position, AID aid, boolean participate) {
         this.position = position;
@@ -31,7 +33,7 @@ public class DestinationResponse extends Message implements IMasterHandable {
     }
 
     public void Handle(MasterAgent agent, ACLMessage msg) {
-        Car temp = new Car(aid, position);
+        this.agent = agent;
         agent.carsInCurrentTransaction.add(new TransactionCar(aid, position, participate));
 
         if(agent.carsInCurrentTransaction.size() == agent.cars.size()) {
@@ -54,8 +56,29 @@ public class DestinationResponse extends Message implements IMasterHandable {
         }
     }
 
+
     private AID getBestCarAID(List<TransactionCar> cars) {
-        return cars.get(0).getAid();
+        TransactionCar car, bestCar=null;
+        double bestDistance = Double.MAX_VALUE, distance;
+        Iterator<TransactionCar> it = cars.iterator();
+        while(it.hasNext()){
+            car = it.next();
+            if(car.isParticipates()){
+                //TODO Calculate the best car based on GoogleApi's time to get to client
+                distance = calculateDistance(agent.currentClientPosition, car.getPosition());
+                if(distance < bestDistance){
+                    bestCar = car;
+                }
+            }
+        }
+        if(bestCar == null) System.out.println("No suitable car found.");
+        return bestCar.getAid();
+    }
+
+    private double calculateDistance(IPosition currentClientPosition, IPosition position) {
+
+        return Math.sqrt(Math.pow(currentClientPosition.GetX() - position.GetX(), 2) +
+                Math.pow(currentClientPosition.GetY() - position.GetY(), 2));
     }
 
 }

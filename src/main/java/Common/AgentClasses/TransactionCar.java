@@ -11,6 +11,14 @@ public class TransactionCar {
     private IPosition position;
     private boolean participates;
 
+    public IPosition getPosition() {
+        return position;
+    }
+
+    public boolean isParticipates() {
+        return participates;
+    }
+
     public AID getAid() {
         return aid;
     }
