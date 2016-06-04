@@ -7,6 +7,7 @@ import jade.core.ProfileImpl;
 import jade.core.Runtime;
 import jade.wrapper.AgentContainer;
 import jade.wrapper.AgentController;
+import jade.wrapper.ControllerException;
 import jade.wrapper.StaleProxyException;
 
 import java.util.ArrayList;
@@ -20,7 +21,7 @@ import java.util.List;
  */
 public class Starter
 {
-    public static void Start(List<AgentStartModel> cars, List<AgentStartModel> stations )
+    public static MasterAgent Start(List<AgentStartModel> cars, List<AgentStartModel> stations )
     {
         Runtime runtime = Runtime.instance();
         runtime.setCloseVM(true);
@@ -29,9 +30,10 @@ public class Starter
         //create container with agents
         Profile profile = new ProfileImpl();
         profile.setParameter("container-name","Container1");
+        profile.setParameter(Profile.GUI, "true");
         //AgentContainer container = runtime.createAgentContainer(profile);
         //create master agent
-        AgentController masterAgent;
+        AgentController masterAgent = null;
         try {
             masterAgent = mainContainer.createNewAgent("master","MasterAgent.MasterAgent", null);
             masterAgent.start();
@@ -64,6 +66,13 @@ public class Starter
             }
         }
 
+        try {
+            return masterAgent.getO2AInterface(MasterAgent.class);
+
+        } catch (StaleProxyException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public static void main(String [] args)
