@@ -1,5 +1,6 @@
 package Common;
 
+import MasterAgent.IMasterAgent;
 import jade.core.AID;
 
 /**
