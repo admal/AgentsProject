@@ -4,12 +4,21 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
     <servlet>
-        <servlet-name>SampleServlet</servlet-name>
-        <servlet-class>WebServlets.SampleServlet</servlet-class>
+        <servlet-name>StartSimulationServlet</servlet-name>
+        <servlet-class>WebServlets.StartSimulationServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CarsServlet</servlet-name>
+        <servlet-class>WebServlets.CarsServlet</servlet-class>
+    </servlet>
+
+
     <servlet-mapping>
-        <servlet-name>SampleServlet</servlet-name>
-        <url-pattern>/sample_servlet</url-pattern>
+        <servlet-name>StartSimulationServlet</servlet-name>
+        <url-pattern>/api/start_simulation</url-pattern>
     </servlet-mapping>
-    
+    <servlet-mapping>
+        <servlet-name>CarsServlet</servlet-name>
+        <url-pattern>/api/cars</url-pattern>
+    </servlet-mapping>
 </web-app>
