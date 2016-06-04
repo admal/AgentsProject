@@ -1,5 +1,4 @@
 package ChargerAgent;
-
 import ChargerAgent.Behaviours.ReceiveMessageBehaviour;
 import ChargerAgent.Behaviours.UpdateWaitingTimeBehaviour;
 import Common.AgentType;
