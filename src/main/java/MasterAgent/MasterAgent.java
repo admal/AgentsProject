@@ -17,7 +17,7 @@ import java.util.Map;
 /*
  * Created by adam on 5/3/16.
  */
-public class MasterAgent extends Agent {
+public class MasterAgent extends Agent implements IMasterAgent {
 
     public List<Car> cars; //list of AIDs of cars
     public List<IPosition> clientsLocations;
@@ -25,6 +25,10 @@ public class MasterAgent extends Agent {
     public List<Parking> parkings;
     public Position currentClientPosition;
     public List<TransactionCar> carsInCurrentTransaction;
+
+    public MasterAgent() {
+        registerO2AInterface(IMasterAgent.class, this);
+    }
 
     @Override
     protected void setup() {
@@ -42,5 +46,14 @@ public class MasterAgent extends Agent {
         }
         addBehaviour(new NewClientRequestBehaviour(this)); //send a new client location to all cars
 
+
+    }
+
+    public int GetCarSize() {
+        return cars.size();
+    }
+
+    public List<Car> getCars() {
+        return cars;
     }
 }
