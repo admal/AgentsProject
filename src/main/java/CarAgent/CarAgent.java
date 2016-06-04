@@ -52,7 +52,14 @@ public class CarAgent extends Agent {
 
     public CarAgent()
     {
-        currentPosition = new Position(20, 10);
+
+    }
+
+    @Override
+    protected void setup() {
+        super.setup();
+        Object[] args = getArguments();
+        this.currentPosition= (Position)args[0];
         chargedLevel = 24;
         Register();
     }

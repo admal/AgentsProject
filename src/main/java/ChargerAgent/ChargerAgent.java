@@ -17,12 +17,21 @@ public class ChargerAgent extends Agent {
      */
     private long waitingTime;
     public ChargerAgent(){
+
+    }
+
+    @Override
+    protected void setup() {
+        super.setup();
+        Object[] args = getArguments();
+
         this.waitingTime = 0;
-        this.position = new Position(2,1);
+        this.position = (Position)args[0];
         this.addBehaviour(new RegisterBehaviour(this, AgentType.ChargingStation,position));
         this.addBehaviour(new ReceiveMessageBehaviour(this));
         this.addBehaviour(new UpdateWaitingTimeBehaviour(this,1000));
     }
+
     public long getWaitingTime(){
         return this.waitingTime;
     }
