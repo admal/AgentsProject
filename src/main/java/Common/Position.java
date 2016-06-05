@@ -21,4 +21,9 @@ public class Position implements IPosition, Serializable {
     public float GetY() {
         return y;
     }
+
+    @Override
+    public String toString() {
+        return "X: "+x+"; Y: " + y +";";
+    }
 }

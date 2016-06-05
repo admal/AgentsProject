@@ -24,6 +24,8 @@
     <script src="app/app.routes.js"></script>
     <!--COMMON-->
 
+    <%--SERVICES--%>
+    <script src="app/home/homeServices.js"></script>
     <!--CONTROLLERS-->
     <script src="app/home/homeController.js"></script>
 </body>

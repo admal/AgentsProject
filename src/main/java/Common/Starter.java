@@ -54,7 +54,7 @@ public class Starter
         {
             try {
                 Object[] args = new Object[1];
-                args[0] = stations.get(i).position;
+                args[0] = cars.get(i).position;
                 AgentController carAgent = mainContainer.createNewAgent("auto"+cars.get(i).id , "CarAgent.CarAgent", args);
                 carAgent.start();
             } catch (StaleProxyException e) {
@@ -64,8 +64,8 @@ public class Starter
         
 
         try {
-            IMasterAgent agent = mainContainer.getAgent("master").getO2AInterface(IMasterAgent.class);
-            return agent;
+            //IMasterAgent agent = mainContainer.getAgent("master").getO2AInterface(IMasterAgent.class);
+            return masterAgent.getO2AInterface(IMasterAgent.class);
         } catch (ControllerException e) {
             e.printStackTrace();
         }

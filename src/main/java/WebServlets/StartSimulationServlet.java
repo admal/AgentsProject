@@ -34,7 +34,7 @@ public class StartSimulationServlet extends javax.servlet.http.HttpServlet {
         stations.add(new AgentStartModel(new Position(4,2),3));
 
         ArrayList<AgentStartModel> cars = new ArrayList<AgentStartModel>();
-        cars.add(new AgentStartModel(new Position(0,0),1));
+        cars.add(new AgentStartModel(new Position(0,0),5));
         WebGlobals.getInstance().masterAgent =  Starter.Start(cars, stations);
     }
 }
