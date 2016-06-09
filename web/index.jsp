@@ -6,6 +6,9 @@
 
     <link rel="stylesheet" href="assets/css/bootstrap.css" />
     <link rel="stylesheet" href="assets/css/bootstrap-theme.css">
+    <style>
+        .angular-google-map-container { height: 400px; }
+    </style>
 </head>
 <body ng-app="app">
 
@@ -17,8 +20,11 @@
     <!--LIBRARIES-->
     <script src="assets/js/jquery-2.2.4.js"></script>
     <script src="assets/js/bootstrap.js"></script>
+    <script src="assets/js/lodash.js"></script>
     <script src="assets/js/angular.js"> </script>
     <script src="assets/js/angular-route.js"></script>
+    <script src="assets/js/angular-simple-logger.js"></script>
+    <script src="assets/js/angular-google-maps.js"></script>
     <!--APP-->
     <script src="app/app.module.js"></script>
     <script src="app/app.routes.js"></script>
