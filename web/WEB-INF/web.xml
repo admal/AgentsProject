@@ -15,6 +15,11 @@
         <servlet-name>StationsServlet</servlet-name>
         <servlet-class>WebServlets.StationsServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AddStationServlet</servlet-name>
+        <servlet-class>WebServlets.AddStationServlet</servlet-class>
+    </servlet>
+
 
     <servlet-mapping>
         <servlet-name>StartSimulationServlet</servlet-name>
@@ -27,5 +32,9 @@
     <servlet-mapping>
         <servlet-name>StationsServlet</servlet-name>
         <url-pattern>/api/stations</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddStationServlet</servlet-name>
+        <url-pattern>/api/addstation</url-pattern>
     </servlet-mapping>
 </web-app>

@@ -14,4 +14,19 @@ app.service("AgentsService", ["$http",function($http){
             this.cars = data;
         });
     };
+    this.AddStation = function(station){
+        var data = $.param({
+            id: station.id,
+            x: station.x,
+            y: station.y
+        });
+        alert(data);
+        var config = {
+            headers : {
+                'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
+            }
+        }
+
+        return $http.post('/api/addstation', data, config);
+    };
 }]);

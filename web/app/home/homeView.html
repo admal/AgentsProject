@@ -24,16 +24,24 @@
                     <h3 class="panel-heading">Charging station</h3>
                 </div>
                 <div class="panel-body">
-                    <div class="alert alert-warning">Temporary input!!</div>
-                    <form class="form-inline">
+                    <div class="alert alert-warning">Temporary input!! (we are around those coords:  [52.25469, 21.03508]) </div>
+                    <form class="form-horizontal">
                         <div class="form-group">
-                            <label for="stationX">X:</label>  <input id="stationX" class="form-control" type="number" />
+                            <label for="stationX">Id:</label>  <input id="stationId" class="form-control" type="number" ng-model="station.id"  required/>
                         </div>
                         <div class="form-group">
-                            <label for="stationY">Y:</label>  <input id="stationY" class="form-control" type="number" />
+                            <label for="stationX">X:</label>  <input id="stationX" class="form-control" type="number" ng-model="station.x"  required/>
                         </div>
-                        <button class="btn btn-info">Add station</button>
+                        <div class="form-group">
+                            <label for="stationY">Y:</label>  <input id="stationY" class="form-control" type="number" ng-model="station.y" required />
+                        </div>
+                        <button class="btn btn-info" ng-click="addStation(station)">Add station</button>
                     </form>
+                    <div ng-show="stationErrors">
+                        <div class="alert alert-danger">
+                            {{errorMsg}}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

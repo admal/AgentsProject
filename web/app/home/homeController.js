@@ -23,4 +23,18 @@ app.controller('HomeController',['$scope', 'AgentsService','uiGmapGoogleMapApi' 
 
     });
     $scope.map = { center: { latitude: 52, longitude: 21 }, zoom: 10 };
+
+
+    //not completely correct (should be put into directive I guess)
+    $scope.stationErrors = false;
+    $scope.addStation = function(station)
+    {
+        AgentsService.AddStation(station).success(function () {
+            alert("Station added!");
+        }).error(function () {
+            $scope.stationErrors = true;
+            $scope.errorMsg = "Sth went wrong!";
+        });
+    }
+    
 }]);

@@ -19,7 +19,7 @@ import java.util.List;
  */
 public class Starter
 {
-    private static AgentContainer mainContainer = null;
+    public static AgentContainer mainContainer = null;
     public static IMasterAgent Start(List<AgentStartModel> cars, List<AgentStartModel> stations )
     {
         Runtime runtime = Runtime.instance();
