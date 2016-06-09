@@ -27,13 +27,13 @@
                     <div class="alert alert-warning">Temporary input!! (we are around those coords:  [52.25469, 21.03508]) </div>
                     <form class="form-horizontal">
                         <div class="form-group">
-                            <label for="stationX">Id:</label>  <input id="stationId" class="form-control" type="number" ng-model="station.id"  required/>
+                            <label for="stationX">Id:</label>  <input id="stationId" class="form-control" type="number" ng-model="station.id"  ng-required/>
                         </div>
                         <div class="form-group">
-                            <label for="stationX">X:</label>  <input id="stationX" class="form-control" type="number" ng-model="station.x"  required/>
+                            <label for="stationX">X:</label>  <input id="stationX" class="form-control" type="number" ng-model="station.x"  ng-required/>
                         </div>
                         <div class="form-group">
-                            <label for="stationY">Y:</label>  <input id="stationY" class="form-control" type="number" ng-model="station.y" required />
+                            <label for="stationY">Y:</label>  <input id="stationY" class="form-control" type="number" ng-model="station.y" ng-required />
                         </div>
                         <button class="btn btn-info" ng-click="addStation(station)">Add station</button>
                     </form>

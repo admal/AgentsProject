@@ -20,12 +20,11 @@ app.service("AgentsService", ["$http",function($http){
             x: station.x,
             y: station.y
         });
-        alert(data);
         var config = {
             headers : {
                 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
             }
-        }
+        };
 
         return $http.post('/api/addstation', data, config);
     };
