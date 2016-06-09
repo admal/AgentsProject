@@ -22,5 +22,5 @@ app.controller('HomeController',['$scope', 'AgentsService','uiGmapGoogleMapApi' 
     uiGmapGoogleMapApi.then(function(maps) {
 
     });
-    $scope.map = { center: { latitude: 45, longitude: -73 }, zoom: 8 };
+    $scope.map = { center: { latitude: 52, longitude: 21 }, zoom: 10 };
 }]);

@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="assets/css/bootstrap.css" />
     <link rel="stylesheet" href="assets/css/bootstrap-theme.css">
     <style>
-        .angular-google-map-container { height: 400px; }
+        .angular-google-map-container { height: 800px; }
     </style>
 </head>
 <body ng-app="app">
