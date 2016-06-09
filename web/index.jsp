@@ -12,7 +12,7 @@
 </head>
 <body ng-app="app">
 
-<div class="container">
+<div class="container-fluid">
     <div ng-view>
     </div>
 </div>

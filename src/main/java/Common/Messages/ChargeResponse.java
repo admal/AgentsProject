@@ -15,6 +15,5 @@ public class ChargeResponse extends Message implements ICarHandable {
 
     public void Handle(CarAgent agent, ACLMessage original) {
         System.out.println("Charge response received");
-
     }
 }
