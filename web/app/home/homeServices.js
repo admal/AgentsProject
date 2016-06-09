@@ -28,4 +28,17 @@ app.service("AgentsService", ["$http",function($http){
 
         return $http.post('/api/addstation', data, config);
     };
+    this.AddClient = function (client) {
+        var data = $.param({
+            x: client.x,
+            y: client.y
+        });
+        var config = {
+          headers : {
+              'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
+          }
+        };
+
+        return $http.post('/api/addclient', data, config);
+    };
 }]);

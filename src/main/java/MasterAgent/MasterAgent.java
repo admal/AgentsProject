@@ -6,6 +6,7 @@ import Common.AgentClasses.ChargingStation;
 import Common.AgentClasses.Parking;
 import Common.AgentClasses.TransactionCar;
 import Common.Position;
+import MasterAgent.behaviours.ClientRequestBehaviour;
 import MasterAgent.behaviours.NewClientRequestBehaviour;
 import MasterAgent.behaviours.UpdateBehaviour;
 import jade.core.Agent;
@@ -23,11 +24,16 @@ public class MasterAgent extends Agent implements IMasterAgent {
     public List<IPosition> clientsLocations;
     public List<ChargingStation> chargingStations;
     public List<Parking> parkings;
-    public Position currentClientPosition;
+    public IPosition currentClientPosition;
     public List<TransactionCar> carsInCurrentTransaction;
+
 
     public MasterAgent() {
         registerO2AInterface(IMasterAgent.class, this);
+    }
+
+    public void addClientLocation(Position position) {
+            clientsLocations.add(position);
     }
 
     @Override
@@ -44,7 +50,7 @@ public class MasterAgent extends Agent implements IMasterAgent {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        addBehaviour(new NewClientRequestBehaviour(this)); //send a new client location to all cars
+        addBehaviour(new ClientRequestBehaviour(this, 2000));  //In a looop read the list of client positions and assign cars
     }
 
     public int GetCarSize() {

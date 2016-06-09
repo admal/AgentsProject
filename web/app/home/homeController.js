@@ -5,7 +5,7 @@ app.controller('HomeController',['$scope', 'AgentsService','uiGmapGoogleMapApi' 
     $scope.msg = 'home controller msg';
     $scope.stationaryAgents =[];
     $scope.carAgents = [];
-
+    $scope.clientsCoordinants = [];
 
     $scope.getData = function(){
         AgentsService.GetStationaryAgents().success(function(stations){
@@ -35,6 +35,13 @@ app.controller('HomeController',['$scope', 'AgentsService','uiGmapGoogleMapApi' 
             $scope.stationErrors = true;
             $scope.errorMsg = "Sth went wrong!";
         });
-    }
-    
+    };
+
+    $scope.addClient = function (client) {
+        AgentsService.AddClient(client).success(function (){
+           alert("Client car request added.");
+        }).error(function(){
+            $scope.errorMsg = "Sth went wrong :(";
+        });
+    };
 }]);

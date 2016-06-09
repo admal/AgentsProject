@@ -39,20 +39,18 @@ public class DestinationResponse extends Message implements IMasterHandable {
         if(agent.carsInCurrentTransaction.size() == agent.cars.size()) {
 
             AID bestCar = getBestCarAID(agent.carsInCurrentTransaction);
-
-            ACLMessage replyMsg = msg.createReply();
-            try {
-                replyMsg.setContentObject(new DestinationAcceptance(agent.currentClientPosition));
-            } catch (IOException e) {
-                e.printStackTrace();
+            if(bestCar != null) {
+                ACLMessage replyMsg = new ACLMessage(ACLMessage.CONFIRM);
+                try {
+                    replyMsg.setContentObject(new DestinationAcceptance(agent.currentClientPosition));
+                    replyMsg.addReceiver(bestCar);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                agent.send(replyMsg);
+            }else{
+                System.out.println("There are currently no cars available.");
             }
-            agent.send(replyMsg);
-            try {
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            agent.addBehaviour(new NewClientRequestBehaviour(agent));
         }
     }
 
@@ -71,7 +69,10 @@ public class DestinationResponse extends Message implements IMasterHandable {
                 }
             }
         }
-        if(bestCar == null) System.out.println("No suitable car found.");
+        if(bestCar == null){
+            System.out.println("No suitable car found.");
+            return null;
+        }
         return bestCar.getAid();
     }
 

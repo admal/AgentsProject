@@ -14,7 +14,7 @@ import java.io.IOException;
 public class DestinationRequest extends Message implements ICarHandable {
     IPosition clientPosition; //nie wiem czy to jest potrzebne
 
-    public DestinationRequest(Position clientPosition){
+    public DestinationRequest(IPosition clientPosition){
         this.clientPosition = clientPosition;
     }
 
