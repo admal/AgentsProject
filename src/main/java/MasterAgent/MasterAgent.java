@@ -45,8 +45,6 @@ public class MasterAgent extends Agent implements IMasterAgent {
             e.printStackTrace();
         }
         addBehaviour(new NewClientRequestBehaviour(this)); //send a new client location to all cars
-
-
     }
 
     public int GetCarSize() {
@@ -55,5 +53,13 @@ public class MasterAgent extends Agent implements IMasterAgent {
 
     public List<Car> getCars() {
         return cars;
+    }
+
+    public List<ChargingStation> getChargingStations() {
+        return chargingStations;
+    }
+
+    public List<Parking> getParkings() {
+        return parkings;
     }
 }

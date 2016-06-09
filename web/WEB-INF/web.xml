@@ -11,7 +11,10 @@
         <servlet-name>CarsServlet</servlet-name>
         <servlet-class>WebServlets.CarsServlet</servlet-class>
     </servlet>
-
+    <servlet>
+        <servlet-name>StationsServlet</servlet-name>
+        <servlet-class>WebServlets.StationsServlet</servlet-class>
+    </servlet>
 
     <servlet-mapping>
         <servlet-name>StartSimulationServlet</servlet-name>
@@ -20,5 +23,9 @@
     <servlet-mapping>
         <servlet-name>CarsServlet</servlet-name>
         <url-pattern>/api/cars</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>StationsServlet</servlet-name>
+        <url-pattern>/api/stations</url-pattern>
     </servlet-mapping>
 </web-app>

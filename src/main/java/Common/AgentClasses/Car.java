@@ -9,7 +9,8 @@ import jade.core.AID;
 public class Car {
     private AID aid;
     private IPosition position;
-
+    private IPosition destination;
+    private float charge;
     public AID getAid() {
         return aid;
     }
@@ -29,5 +30,21 @@ public class Car {
 
     public void setPosition(IPosition position) {
         this.position = position;
+    }
+
+    public IPosition getDestination() {
+        return destination;
+    }
+
+    public void setDestination(IPosition destination) {
+        this.destination = destination;
+    }
+
+    public float getCharge() {
+        return charge;
+    }
+
+    public void setCharge(float charge) {
+        this.charge = charge;
     }
 }

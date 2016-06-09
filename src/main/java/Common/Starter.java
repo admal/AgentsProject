@@ -80,7 +80,7 @@ public class Starter
         stations.add(new AgentStartModel(new Position(4,2),3));
 
         ArrayList<AgentStartModel> cars = new ArrayList<AgentStartModel>();
-        cars.add(new AgentStartModel(new Position(0,0),1));
+        cars.add(new AgentStartModel(new Position(52.26881f, 21.04666f),1));
         IMasterAgent a = Start(cars, stations);
         System.out.println(a.GetCarSize());
     }

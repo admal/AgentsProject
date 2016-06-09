@@ -61,7 +61,7 @@ public class CarAgent extends Agent {
         Object[] args = getArguments();
         this.currentPosition= (Position)args[0];
         System.out.println("Auto: "+ currentPosition);
-        chargedLevel = 100;
+        chargedLevel = 90;
         Register();
     }
 

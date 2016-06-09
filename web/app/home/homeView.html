@@ -1,3 +1,12 @@
+<div ng-init="getData()">
 Hello {{msg}} <br>
 Agents: <br>
-{{agents | json}}
+<div ng-hide="carAgents">
+    Loading...
+</div>
+<div ng-hide="stationaryAgents">
+    Loading...
+</div>
+{{carAgents | json}} <br> <br> <br>
+{{stationaryAgents | json}}
+</div>
