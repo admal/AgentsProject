@@ -37,7 +37,7 @@ public class CarsServlet extends HttpServlet {
         List<CarAgentWebModel> viewModels = new ArrayList<CarAgentWebModel>();
         for (Car car :
                 cars) {
-            viewModels.add(new CarAgentWebModel(AgentType.Car, car.getPosition(), car.getPosition(), 100, car.getAid().getLocalName()));
+            viewModels.add(new CarAgentWebModel(AgentType.Car, car.getPosition(), car.getDestination(), 100, car.getAid().getLocalName()));
         }
         String retJson = new Gson().toJson(viewModels);
         response.getWriter().write(retJson);

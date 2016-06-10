@@ -37,7 +37,7 @@ public class DestinationRequest extends Message implements ICarHandable {
             ACLMessage rejectResponse = new ACLMessage(ACLMessage.REJECT_PROPOSAL);
             rejectResponse.setOntology("DestinationResponse");
             try {
-                rejectResponse.setContentObject(new DestinationResponse(null, agent.getAID(), false));
+                rejectResponse.setContentObject(new DestinationResponse(agent.getCurrentPosition(), agent.getAID(), agent.getDestination()!=null ));
             } catch (IOException e) {
                 e.printStackTrace();
             }

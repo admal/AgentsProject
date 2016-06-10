@@ -50,7 +50,7 @@ public class DestinationResponse extends Message implements IMasterHandable {
                 //we mark that the system is ready to assign next destination a car
                 //we also set car from this transaction its destination
                 for (Car car: agent.cars) {
-                    if(car.getAid() == bestCar){
+                    if(car.getAid().equals(bestCar)){
                         car.setDestination(agent.currentClientPosition);
                         break;
                     }
