@@ -9,9 +9,11 @@ import Common.Position;
 import MasterAgent.behaviours.ClientRequestBehaviour;
 import MasterAgent.behaviours.NewClientRequestBehaviour;
 import MasterAgent.behaviours.UpdateBehaviour;
+import jade.core.AID;
 import jade.core.Agent;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -33,7 +35,8 @@ public class MasterAgent extends Agent implements IMasterAgent {
     }
 
     public void addClientLocation(Position position) {
-            clientsLocations.add(position);
+        System.out.println("Added a client position to the queue.");
+        clientsLocations.add(position);
     }
 
     @Override

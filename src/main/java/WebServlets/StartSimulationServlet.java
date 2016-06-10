@@ -36,15 +36,5 @@ public class StartSimulationServlet extends javax.servlet.http.HttpServlet {
         ArrayList<AgentStartModel> cars = new ArrayList<AgentStartModel>();
         cars.add(new AgentStartModel(new Position(52.26881f, 21.04666f),5));
         WebGlobals.getInstance().masterAgent =  Starter.Start(cars, stations);
-
-        // ADDING A RANDOM CLIENT TO SEND A CAR TO
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        WebGlobals.getInstance().masterAgent.addClientLocation(new Position(20,40));
-        WebGlobals.getInstance().masterAgent.addClientLocation(new Position(30,40));
-        WebGlobals.getInstance().masterAgent.addClientLocation(new Position(40,20));
     }
 }

@@ -47,7 +47,17 @@ public class DestinationResponse extends Message implements IMasterHandable {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+                //we mark that the system is ready to assign next destination a car
+                //we also set car from this transaction its destination
+                for (Car car: agent.cars) {
+                    if(car.getAid() == bestCar){
+                        car.setDestination(agent.currentClientPosition);
+                        break;
+                    }
+                }
                 agent.send(replyMsg);
+                agent.currentClientPosition = null;
+
             }else{
                 System.out.println("There are currently no cars available.");
             }
