@@ -4,6 +4,7 @@ import CarAgent.Behaviours.CheckingFuelBehaviour;
 import CarAgent.Behaviours.MovingBehaviour;
 import CarAgent.Behaviours.ReceivingBehaviour;
 import Common.AgentClasses.ChargingStation;
+import Common.AgentClasses.TransactionCharger;
 import Common.AgentType;
 import Common.Behaviours.RegisterBehaviour;
 import Common.Abstract.IPosition;
@@ -24,6 +25,7 @@ public class CarAgent extends Agent {
     private IPosition chargingPosition;
     private List<IPosition> route;
     private MovingBehaviour movingBehaviour;
+    public List<TransactionCharger> chargingStations;
 
     //in percents
     private float chargedLevel;
@@ -69,6 +71,7 @@ public class CarAgent extends Agent {
         this.currentPosition= (Position)args[0];
         this.chargingPosition = null;
         this.movingBehaviour = null;
+        chargingStations = new ArrayList<TransactionCharger>();
         
         //hardcoded just for debuging
         this.route = new ArrayList<IPosition>();

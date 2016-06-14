@@ -3,6 +3,9 @@ package Common.AgentClasses;
 import Common.Abstract.IPosition;
 import jade.core.AID;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by jedrek on 03.05.16.
  */
@@ -11,6 +14,7 @@ public class Car {
     private IPosition position;
     private IPosition destination;
     private float charge;
+
     public AID getAid() {
         return aid;
     }

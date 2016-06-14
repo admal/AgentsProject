@@ -23,7 +23,7 @@ public class SendChargeResponseBehaviour extends OneShotBehaviour {
     }
     public void action() {
         ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
-        ChargeResponse response = new ChargeResponse(agent.getWaitingTime());
+        ChargeResponse response = new ChargeResponse(agent.getPosition(), agent.getWaitingTime());
         msg.setOntology("chargeResponse");
         try {
             msg.setContentObject(response);

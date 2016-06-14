@@ -61,6 +61,7 @@ public class DestinationResponse extends Message implements IMasterHandable {
             }else{
                 System.out.println("There are currently no cars available.");
             }
+            agent.carsInCurrentTransaction.clear();
         }
     }
 
