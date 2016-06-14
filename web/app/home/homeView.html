@@ -11,13 +11,16 @@
                 Loading...
             </div>
             {{carAgents | json}} <br> <br> <br>
-            {{stationaryAgents | json}}
+            {{stationaryAgents | json}} <br>
+            {{map.markers | json}}
         </div>
     </div>
     <div class="row">
         <div class="col-lg-8">
             <ui-gmap-google-map center='map.center' zoom='map.zoom'>
                 <ui-gmap-layer type="TrafficLayer"></ui-gmap-layer>
+                <ui-gmap-marker ng-repeat="m in map.markers" coords="m.coords" idkey="m.id"  options="m.options">
+                </ui-gmap-marker>
             </ui-gmap-google-map>
         </div>
         <div class="col-lg-4">
@@ -46,9 +49,6 @@
                     </div>
                 </div>
             </div>
-
-
-
             <div>
                 <div class="panel-heading">
                     <h3 class="panel-heading">Request a car</h3>
