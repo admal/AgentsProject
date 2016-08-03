@@ -7,3 +7,4 @@ public interface IPosition {
     float GetX();
     float GetY();
 }
+
