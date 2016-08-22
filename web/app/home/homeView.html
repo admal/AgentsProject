@@ -2,7 +2,6 @@
 
     <div class="row">
         <div class="col-lg-12">
-            Hello {{home.msg}} <br>
             Agents: <br>
             <div ng-hide="home.carAgents">
                 Loading...
@@ -10,12 +9,6 @@
             <div ng-hide="home.stationaryAgents">
                 Loading...
             </div>
-            {{home.carAgents | json}} <br> <br> <br>
-            {{home.stationaryAgents | json}} <br> <br>
-            Path: <br>
-            {{home.directions | json : 4}} <br>
-            Markers <br>
-            {{home.map.markers | json}}
         </div>
     </div>
     <div class="row">

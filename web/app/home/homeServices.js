@@ -3,7 +3,7 @@
  */
 app.service("AgentsService", ["$http", '$log',function($http, $log ){
     var vm = this;
-    var baseUrl = 'localhost:8000/';
+    var baseUrl = 'http://localhost:8080/';
 
     function getResource(url, success, error) {
         $http({
@@ -23,32 +23,23 @@ app.service("AgentsService", ["$http", '$log',function($http, $log ){
         }).then(success, error);
     }
 
-
-    this.GetStationaryAgents = function() {
-        return $http.get("/api/stations").success(function (data) {
-            this.stations = data;
-        });
+    this.GetStationaryAgents = function(success, error) {
+        getResource('api/stations', success, error);
     };
 
-    this.GetCars = function(){
-       return $http.get("/api/cars").success(function (data) {
-            this.cars = data;
-        });
+    this.GetCars = function(success, error){
+        getResource('api/cars', success, error);
     };
-    this.AddStation = function(station){
+
+    this.AddStation = function(station, success, error){
         var data = $.param({
             id: station.id,
             x: station.x,
             y: station.y
         });
-        var config = {
-            headers : {
-                'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
-            }
-        };
-
-        return $http.post('/api/addstation', data, config);
+        postResource('api/addstation', data, success, error);
     };
+
     this.AddClient = function (client) {
         var data = $.param({
             x: client.x,
@@ -60,6 +51,6 @@ app.service("AgentsService", ["$http", '$log',function($http, $log ){
           }
         };
 
-        return $http.post('/api/addclient', data, config);
+        return $http.post('api/addclient', data, config);
     };
 }]);

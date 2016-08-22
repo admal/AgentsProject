@@ -1,7 +1,7 @@
 /**
  * Created by adam on 6/4/16.
  */
-app.controller('HomeController', function ($scope, AgentsService, uiGmapIsReady, $timeout, $log) {
+app.controller('HomeController', function ($scope, AgentsService, uiGmapIsReady, $timeout, $log, $interval) {
 //app.controller('HomeController',['$scope', 'AgentsService','uiGmapIsReady' , function ($scope, AgentsService, uiGmapIsReady) {
     var vm = this;
     
@@ -14,7 +14,7 @@ app.controller('HomeController', function ($scope, AgentsService, uiGmapIsReady,
 
     function setMarkers()
     {
-        vm.map.markers.length=0; //reset the array
+        vm.map.markers.length= []; //reset the array
         if(vm.stationaryAgents !== null){
             vm.stationaryAgents.forEach(function(curr, index, arr){
                 vm.map.markers.push(new marker(index,curr.position.x, curr.position.y, "assets/images/ChargingStation.png", curr.name));
@@ -59,33 +59,32 @@ app.controller('HomeController', function ($scope, AgentsService, uiGmapIsReady,
         });
 
     };
-    uiGmapIsReady.promise().then(function(maps) {
-    });
+    uiGmapIsReady.promise().then(function(maps) {});
+
 
     vm.getData = function(){
-        AgentsService.GetStationaryAgents().success(function(stations){
-            vm.stationaryAgents = stations;
+        AgentsService.GetStationaryAgents(function (response) {
+            vm.stationaryAgents = response.data;
             setMarkers();
-        });
+            $log.info('stations updated');
+            $log.info(vm.stationaryAgents);
+        }, onError);
 
-        AgentsService.GetCars().success(function(cars){
-            vm.carAgents = cars;
+        AgentsService.GetCars(function (response) {
+            vm.carAgents = response.data;
             setMarkers();
-        });
+            $log.info('cars updated');
+            $log.info(vm.carAgents);
+        }, onError);
 
     };
 
-    //not completely correct (should be put into directive I guess)
-    vm.stationErrors = false;
     vm.addStation = function(station)
     {
-        AgentsService.AddStation(station).success(function () {
-            vm.getData();
-            alert("Station added!");
-        }).error(function () {
-            vm.stationErrors = true;
-            vm.errorMsg = "Sth went wrong!";
-        });
+        AgentsService.AddStation(station, function (response) {
+            $log.info(response);
+            alert('Station added!');
+        }, onError);
     };
 
     vm.addClient = function (client) {
@@ -96,6 +95,18 @@ app.controller('HomeController', function ($scope, AgentsService, uiGmapIsReady,
             vm.errorMsg = "Sth went wrong :(";
         });
     };
+
+
+   var updateWatch = $interval(vm.getData, 10000); //every 10 sec update
+
+    $scope.$on('$destroy', function () {
+        $interval.cancel(updateWatch);
+        updateWatch = undefined;
+    });
+
+    function onError(reason) {
+        $log.error(reason);
+    }
 });
 
 function marker(id, x, y, icon, name) {
