@@ -11,6 +11,7 @@ import com.google.maps.DistanceMatrixApiRequest;
 import com.google.maps.GeoApiContext;
 import com.google.maps.PendingResult;
 import com.google.maps.model.DistanceMatrix;
+import com.google.maps.model.Duration;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -47,14 +48,15 @@ public class CarsServlet extends HttpServlet {
         }
 
         GeoApiContext gapiContext = new GeoApiContext();
-        gapiContext.setApiKey("AIzaSyBUuzxbG2yS8ghz0lMFDF9Wr8A9ZKu8XXI");
+        gapiContext.setApiKey("AIzaSyA4BT5qYUsHatN2otn241CFgB9fUUJt9TQ");
 
         cars.get(0).setDestination(new Position(52.25469f, 21.03508f)); //set hardcoded charger loaction as destination TODO get/set destinations
         String destination = cars.get(0).getDestination().toString();
         String origin = cars.get(0).getPosition().toString();
 
         DistanceMatrixApiRequest req = DistanceMatrixApi.getDistanceMatrix(gapiContext, new String[]{origin},
-                new String[]{destination});
+                new String[]{destination}); 
+
 
         req.setCallback(new PendingResult.Callback<DistanceMatrix>() {
             public void onResult(DistanceMatrix distanceMatrix) {
