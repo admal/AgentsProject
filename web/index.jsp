@@ -9,7 +9,7 @@
     <script type="text/javascript"
             src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
     <style>
-        .angular-google-map-container { height: 50vh; border: solid #000000 thin;  }
+        .angular-google-map-container { height: 45vh; border: solid #000000 thin;  }
         .navbar-inverse{border-radius: 0px;}
     </style>
 </head>

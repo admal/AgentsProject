@@ -34,9 +34,10 @@ public class CarsServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
+
         IMasterAgent master = WebGlobals.getInstance().masterAgent;
         if (master == null) {
-            response.getWriter().write("null");
+            response.getWriter().write(new Gson().toJson(new Object[0]));
             return;
         }
 

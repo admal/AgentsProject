@@ -5,6 +5,7 @@ import Common.AgentClasses.ChargingStation;
 import Common.AgentClasses.Parking;
 import Common.AgentType;
 import Common.WebModels.StationaryAgentWebModel;
+import MasterAgent.IMasterAgent;
 import com.google.gson.Gson;
 
 import javax.servlet.ServletException;
@@ -26,19 +27,22 @@ public class StationsServlet extends HttpServlet {
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
 
-        if (WebGlobals.getInstance().masterAgent == null)
-            response.getWriter().write("null");
+        IMasterAgent master = WebGlobals.getInstance().masterAgent;
+        if (master == null) {
+            response.getWriter().write(new Gson().toJson(new Object[0]));
+            return;
+        }
 
-        List<ChargingStation> stations = WebGlobals.getInstance().masterAgent.getChargingStations();
-        List<Parking> parkings = WebGlobals.getInstance().masterAgent.getParkings();
+        List<ChargingStation> stations =master.getChargingStations();
+        List<Parking> parkings = master.getParkings();
         List<StationaryAgentWebModel> viewModels = new ArrayList<StationaryAgentWebModel>();
-        for (ChargingStation station :
-                stations) {
+        for (ChargingStation station : stations)
+        {
             viewModels.add(new StationaryAgentWebModel(station.getAid().getLocalName(),AgentType.ChargingStation, station.getPosition()));
         }
-        for (Parking parking :
-                parkings) {
-            viewModels.add(new StationaryAgentWebModel("parking",AgentType.Parking, parking.getPosition()));
+        for (Parking parking : parkings)
+        {
+            viewModels.add(new StationaryAgentWebModel("parking", AgentType.Parking, parking.getPosition()));
         }
 
         String retJson = new Gson().toJson(viewModels);

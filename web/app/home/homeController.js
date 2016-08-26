@@ -107,6 +107,8 @@ app.controller('HomeController', function ($scope, AgentsService, uiGmapIsReady,
     function onError(reason) {
         $log.error(reason);
     }
+
+    vm.getData();
 });
 
 function marker(id, x, y, icon, name) {
