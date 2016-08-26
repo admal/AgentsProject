@@ -47,29 +47,29 @@ public class CarsServlet extends HttpServlet {
             viewModels.add(new CarAgentWebModel(AgentType.Car, car.getPosition(), car.getDestination(), 100, car.getAid().getLocalName()));
         }
 
-        GeoApiContext gapiContext = new GeoApiContext();
-        gapiContext.setApiKey("AIzaSyA4BT5qYUsHatN2otn241CFgB9fUUJt9TQ");
-
-        cars.get(0).setDestination(new Position(52.25469f, 21.03508f)); //set hardcoded charger loaction as destination TODO get/set destinations
-        String destination = cars.get(0).getDestination().toString();
-        String origin = cars.get(0).getPosition().toString();
-
-        DistanceMatrixApiRequest req = DistanceMatrixApi.getDistanceMatrix(gapiContext, new String[]{origin},
-                new String[]{destination}); 
-
-
-        req.setCallback(new PendingResult.Callback<DistanceMatrix>() {
-            public void onResult(DistanceMatrix distanceMatrix) {
-                System.out.println("shit works");
-                System.out.println("distance: " + distanceMatrix.rows[0].elements[0].distance);
-                System.out.println("duration: " + distanceMatrix.rows[0].elements[0].duration);
-            }
-
-            public void onFailure(Throwable throwable) {
-                System.out.println("shit's shit");
-            }
-        });
-
+//        GeoApiContext gapiContext = new GeoApiContext();
+//        gapiContext.setApiKey("AIzaSyBQsJAcRshc4kGL6FUJLpxJCjBqJvBUQIA");
+//
+//        cars.get(0).setDestination(new Position(52.25469f, 21.03508f)); //set hardcoded charger loaction as destination TODO get/set destinations
+//        String destination = cars.get(0).getDestination().toString();
+//        String origin = cars.get(0).getPosition().toString();
+//
+//        DistanceMatrixApiRequest req = DistanceMatrixApi.getDistanceMatrix(gapiContext, new String[]{origin},
+//                new String[]{destination});
+//
+//
+//        req.setCallback(new PendingResult.Callback<DistanceMatrix>() {
+//            public void onResult(DistanceMatrix distanceMatrix) {
+//                System.out.println("shit works");
+//                System.out.println("distance: " + distanceMatrix.rows[0].elements[0].distance);
+//                System.out.println("duration: " + distanceMatrix.rows[0].elements[0].duration);
+//            }
+//
+//            public void onFailure(Throwable throwable) {
+//                System.out.println("shit's shit");
+//            }
+//        });
+//
 
 
         String retJson = new Gson().toJson(viewModels);

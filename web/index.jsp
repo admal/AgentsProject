@@ -9,16 +9,29 @@
     <script type="text/javascript"
             src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
     <style>
-        .angular-google-map-container { height: 800px; }
+        .angular-google-map-container { height: 50vh; border: solid #000000 thin;  }
+        .navbar-inverse{border-radius: 0px;}
     </style>
 </head>
 <body ng-app="app">
 
-<div class="container-fluid">
-    <div ui-view>
+<div class="container-fluid" style="padding: 0;">
+    <div class="row">
+        <div ng-controller="HomeController as home">
+            <div class="col-lg-12">
+                <ui-gmap-google-map center='home.map.center' zoom='home.map.zoom' control="home.map.control">
+                    <ui-gmap-layer type="TrafficLayer"></ui-gmap-layer>
+                    <ui-gmap-marker ng-repeat="m in home.map.markers" coords="m.coords" idkey="m.id"  options="m.options">
+                    </ui-gmap-marker>
+                </ui-gmap-google-map>
+            </div>
+        </div>
+    </div>
+    <main-navbar></main-navbar>
+    <div class="container-fluid">
+        <div ui-view></div>
     </div>
 </div>
-
     <!--LIBRARIES-->
     <script src="assets/js/jquery-2.2.4.js"></script>
     <script src="assets/js/bootstrap.js"></script>
@@ -30,11 +43,15 @@
     <!--APP-->
     <script src="app/app.module.js"></script>
     <script src="app/app.routes.js"></script>
-    <!--COMMON-->
-
+    <!--COMPONENTS-->
+<script src="app/components/mainNavbar/mainNavbar.directive.controller.js"></script>
+<script src="app/components/mainNavbar/mainNavbar.directive.js"></script>
     <%--SERVICES--%>
     <script src="app/home/homeServices.js"></script>
     <!--CONTROLLERS-->
     <script src="app/home/homeController.js"></script>
+    <script src="app/requests/requests.controller.js"></script>
+    <script src="app/cars/cars.controller.js"></script>
+    <script src="app/stations/stations.controller.js"></script>
 </body>
 </html>
