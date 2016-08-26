@@ -1,10 +1,9 @@
 /**
- * Created by adam on 6/5/16.
+ * Created by adam on 8/26/16.
  */
-app.service("AgentsService", ["$http", '$log',function($http, $log ){
+app.service("AgentsApi", function($http ) {
     var vm = this;
     var baseUrl = 'http://localhost:8080/';
-
     function getResource(url, success, error) {
         $http({
             method: 'GET',
@@ -23,15 +22,15 @@ app.service("AgentsService", ["$http", '$log',function($http, $log ){
         }).then(success, error);
     }
 
-    this.GetStationaryAgents = function(success, error) {
+    vm.GetStationaryAgents = function(success, error) {
         getResource('api/stations', success, error);
     };
 
-    this.GetCars = function(success, error){
+    vm.GetCars = function(success, error){
         getResource('api/cars', success, error);
     };
 
-    this.AddStation = function(station, success, error){
+    vm.AddStation = function(station, success, error){
         var data = $.param({
             id: station.id,
             x: station.x,
@@ -40,17 +39,17 @@ app.service("AgentsService", ["$http", '$log',function($http, $log ){
         postResource('api/addstation', data, success, error);
     };
 
-    this.AddClient = function (client) {
+    vm.AddClient = function (client) {
         var data = $.param({
             x: client.x,
             y: client.y
         });
         var config = {
-          headers : {
-              'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
-          }
+            headers : {
+                'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
+            }
         };
 
         return $http.post('api/addclient', data, config);
     };
-}]);
+});

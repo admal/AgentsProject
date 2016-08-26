@@ -44,10 +44,10 @@
     <script src="app/app.module.js"></script>
     <script src="app/app.routes.js"></script>
     <!--COMPONENTS-->
-<script src="app/components/mainNavbar/mainNavbar.directive.controller.js"></script>
-<script src="app/components/mainNavbar/mainNavbar.directive.js"></script>
-    <%--SERVICES--%>
-    <script src="app/home/homeServices.js"></script>
+    <script src="app/components/mainNavbar/mainNavbar.directive.controller.js"></script>
+    <script src="app/components/mainNavbar/mainNavbar.directive.js"></script>
+    <script src="app/components/agentsApi/agentsApi.service.js"></script>
+    <script src="app/components/agentService/agentService.service.js"></script>
     <!--CONTROLLERS-->
     <script src="app/home/homeController.js"></script>
     <script src="app/requests/requests.controller.js"></script>

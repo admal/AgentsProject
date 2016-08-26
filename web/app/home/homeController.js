@@ -1,7 +1,7 @@
 /**
  * Created by adam on 6/4/16.
  */
-app.controller('HomeController', function ($scope, AgentsService, uiGmapIsReady, $timeout, $log, $interval) {
+app.controller('HomeController', function ($scope, uiGmapIsReady, $timeout, $log, AgentsService, AgentsApi) {
 //app.controller('HomeController',['$scope', 'AgentsService','uiGmapIsReady' , function ($scope, AgentsService, uiGmapIsReady) {
     var vm = this;
     
@@ -9,8 +9,6 @@ app.controller('HomeController', function ($scope, AgentsService, uiGmapIsReady,
     vm.stationaryAgents =[];
     vm.carAgents = [];
     vm.clientsCoordinants = [];
-
-   // $scope.markers = [];
 
     function setMarkers()
     {
@@ -26,7 +24,6 @@ app.controller('HomeController', function ($scope, AgentsService, uiGmapIsReady,
             });
             vm.calcRoutes();
         }
-
     }
 
     vm.map = { center: { latitude: 52.25469, longitude: 21.03508}, zoom: 14, markers:[], control:{} };
@@ -61,34 +58,16 @@ app.controller('HomeController', function ($scope, AgentsService, uiGmapIsReady,
     };
     uiGmapIsReady.promise().then(function(maps) {});
 
-
-    vm.getData = function(){
-        AgentsService.GetStationaryAgents(function (response) {
-            vm.stationaryAgents = response.data;
-            setMarkers();
-            $log.info('stations updated');
-            $log.info(vm.stationaryAgents);
-        }, onError);
-
-        AgentsService.GetCars(function (response) {
-            vm.carAgents = response.data;
-            setMarkers();
-            $log.info('cars updated');
-            $log.info(vm.carAgents);
-        }, onError);
-
-    };
-
     vm.addStation = function(station)
     {
-        AgentsService.AddStation(station, function (response) {
+        AgentsApi.AddStation(station, function (response) {
             $log.info(response);
             alert('Station added!');
         }, onError);
     };
 
     vm.addClient = function (client) {
-        AgentsService.AddClient(client).success(function (){
+        AgentsApi.AddClient(client).success(function (){
             vm.getData();
             alert("Client car request added.");
         }).error(function(){
@@ -96,19 +75,23 @@ app.controller('HomeController', function ($scope, AgentsService, uiGmapIsReady,
         });
     };
 
-
-   var updateWatch = $interval(vm.getData, 10000); //every 10 sec update
-
-    $scope.$on('$destroy', function () {
-        $interval.cancel(updateWatch);
-        updateWatch = undefined;
-    });
-
     function onError(reason) {
         $log.error(reason);
     }
 
-    vm.getData();
+    $scope.$watch(function (scope) {
+        return AgentsService.cars;
+    }, function (newVal, oldVal) {
+        vm.carAgents = AgentsService.cars;
+        setMarkers();
+    }, true);
+
+    $scope.$watch(function (scope) {
+        return AgentsService.stations;
+    }, function (newVal, oldVal) {
+        vm.stationaryAgents = AgentsService.stations;
+        setMarkers();
+    }, true);
 });
 
 function marker(id, x, y, icon, name) {
