@@ -23,7 +23,8 @@ public class SendReservationResponseBehaviour extends OneShotBehaviour {
     }
     public void action() {
         ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
-        ReservationResponse response = new ReservationResponse(myAgent.getAID(),true);
+        ReservationResponse response = new ReservationResponse(agent.getPosition(), myAgent.getAID(),true);
+        System.out.println("reservation response");
         msg.setOntology("reservationResponse");
         try {
             msg.setContentObject(response);
