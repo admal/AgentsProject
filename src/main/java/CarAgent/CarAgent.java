@@ -27,6 +27,16 @@ public class CarAgent extends Agent {
     private MovingBehaviour movingBehaviour;
     public List<TransactionCharger> chargingStations;
 
+
+    public IPosition getChargingPosition() {
+        return chargingPosition;
+    }
+
+    public void setChargingPosition(IPosition chargingPosition) {
+        this.chargingPosition = chargingPosition; //TODO has to inform the system to change the car for client
+        this.setDestination(chargingPosition);
+    }
+
     //in percents
     private float chargedLevel;
     private boolean inMove = false;
