@@ -23,7 +23,7 @@ public class CheckingFuelBehaviour extends TickerBehaviour {
         if(carAgent.isInMove())
         {
             carAgent.setChargedLevel(carAgent.getChargedLevel()-1 );
-            if (carAgent.getChargedLevel() < 20)
+            if (carAgent.getChargedLevel() < 20 && carAgent.getChargingPosition() == null)
             {
                 ChargeRequest request = new ChargeRequest(carAgent.getAID());
                 ACLMessage requestMessage = new ACLMessage(ACLMessage.REQUEST);

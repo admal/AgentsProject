@@ -24,7 +24,7 @@ public class ReservationResponse extends Message implements ICarHandable{
     public void Handle(CarAgent agent, ACLMessage original) {
         if(success) {
             System.out.println(agent.getLocalName() + ": Charger destination set.");
-            agent.setDestination(chargerPosition);
+            agent.setChargingPosition(chargerPosition);
         }else{
             System.out.println(agent.getLocalName() + ": Charger reservation failed.");
         }
