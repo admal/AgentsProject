@@ -9,12 +9,13 @@ app.controller('HomeController', function ($scope, uiGmapIsReady, $timeout, $log
     vm.stationaryAgents =[];
     vm.carAgents = [];
     vm.clientsCoordinants = [];
-
     function setMarkers()
     {
+
         vm.map.markers.length= []; //reset the array
         if(vm.stationaryAgents !== null){
             vm.stationaryAgents.forEach(function(curr, index, arr){
+  
                 vm.map.markers.push(new marker(index,curr.position.x, curr.position.y, "assets/images/ChargingStation.png", curr.name));
             });
         }
@@ -23,6 +24,7 @@ app.controller('HomeController', function ($scope, uiGmapIsReady, $timeout, $log
                 vm.map.markers.push(new marker(index+vm.stationaryAgents.length,curr.position.x, curr.position.y, "assets/images/Car.png", curr.name));
             });
             vm.calcRoutes();
+
         }
     }
 

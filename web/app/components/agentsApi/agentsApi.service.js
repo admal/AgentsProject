@@ -4,6 +4,13 @@
 app.service("AgentsApi", function($http ) {
     var vm = this;
     var baseUrl = 'http://localhost:8080/';
+
+    /**
+     * Sends GET request to server with given url
+     * @param url
+     * @param success callback function on success
+     * @param error callback function on error
+     */
     function getResource(url, success, error) {
         $http({
             method: 'GET',
@@ -11,6 +18,13 @@ app.service("AgentsApi", function($http ) {
         }).then(success, error);
     }
 
+    /**
+     * Sends POST request to server with given url and data
+     * @param url
+     * @param postData data to send
+     * @param success callback function on success
+     * @param error callback function on error
+     */
     function postResource(url, postData, success, error) {
         $http({
             method: 'POST',
@@ -52,4 +66,8 @@ app.service("AgentsApi", function($http ) {
 
         return $http.post('api/addclient', data, config);
     };
+
+    vm.startAgentPlatform = function (success, error) {
+        getResource('api/start_simulation', success, error);
+    }
 });
