@@ -1,7 +1,6 @@
 package CarAgent.Behaviours;
 
 import CarAgent.CarAgent;
-import Common.Abstract.IPosition;
 import jade.core.behaviours.TickerBehaviour;
 
 /**
@@ -31,11 +30,15 @@ public class MovingBehaviour extends TickerBehaviour {
 
     private float getRealDistance(float lat1, float lon1, float lat2, float lon2){
         double theta = lon1 - lon2;
-        float distance = (float) (Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2)) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.cos(deg2rad(theta)));
+        float distance = (float) (Math.sin(deg2rad(lat1))
+                * Math.sin(deg2rad(lat2))
+                + Math.cos(deg2rad(lat1))
+                * Math.cos(deg2rad(lat2))
+                * Math.cos(deg2rad(theta)));
         distance = (float) Math.acos(distance);
         distance = rad2deg(distance);
         distance = (float) (distance * 60 * 1.1515);
-        distance = (float) (distance * 1.609344); //to get kilometers
+        distance = (float) (distance * 1.609344);
         return distance;
     }
     private static float deg2rad(double deg) {

@@ -3,10 +3,11 @@ package Common.Messages;
 import CarAgent.CarAgent;
 import Common.Abstract.ICarHandable;
 import Common.Abstract.IPosition;
-import Common.Position;
+import Common.GoogleApiHelper.DirectionsClient;
 import jade.lang.acl.ACLMessage;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * Created by jedrek on 03.05.16.
@@ -22,6 +23,7 @@ public class DestinationRequest extends Message implements ICarHandable {
         System.out.println(agent.getLocalName() + ": Destination request handled");
         if(!agent.isInMove()) //it means that car is free
         {
+            ArrayList<IPosition> tmp = DirectionsClient.get_directions_from_car_to_target(agent, this.clientPosition);
             ACLMessage acceptResponse = new ACLMessage(ACLMessage.ACCEPT_PROPOSAL);
             acceptResponse.addReceiver(original.getSender());
             try {

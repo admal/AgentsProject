@@ -3,11 +3,11 @@ package CarAgent;
 import CarAgent.Behaviours.CheckingFuelBehaviour;
 import CarAgent.Behaviours.MovingBehaviour;
 import CarAgent.Behaviours.ReceivingBehaviour;
+import Common.Abstract.IPosition;
 import Common.AgentClasses.ChargingStation;
 import Common.AgentClasses.TransactionCharger;
 import Common.AgentType;
 import Common.Behaviours.RegisterBehaviour;
-import Common.Abstract.IPosition;
 import Common.Position;
 import jade.core.Agent;
 
@@ -128,5 +128,9 @@ public class CarAgent extends Agent {
 
     public List<IPosition> getRoute() {
         return this.route;
+    }
+
+    public int getSpeed() {
+        return speed;
     }
 }
