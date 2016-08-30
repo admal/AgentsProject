@@ -23,7 +23,8 @@ public class DestinationRequest extends Message implements ICarHandable {
         System.out.println(agent.getLocalName() + ": Destination request handled");
         if(!agent.isInMove()) //it means that car is free
         {
-            ArrayList<IPosition> tmp = DirectionsClient.get_directions_from_car_to_target(agent, this.clientPosition);
+            ArrayList<IPosition> directions = DirectionsClient.get_directions_from_car_to_target(agent, this.clientPosition);
+
             ACLMessage acceptResponse = new ACLMessage(ACLMessage.ACCEPT_PROPOSAL);
             acceptResponse.addReceiver(original.getSender());
             try {
@@ -36,14 +37,18 @@ public class DestinationRequest extends Message implements ICarHandable {
         }
         else
         {
-            ACLMessage rejectResponse = new ACLMessage(ACLMessage.REJECT_PROPOSAL);
-            rejectResponse.setOntology("DestinationResponse");
-            try {
-                rejectResponse.setContentObject(new DestinationResponse(agent.getCurrentPosition(), agent.getAID(), agent.getDestination()!=null ));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            agent.send(rejectResponse);
+            handle_car_in_move(agent);
         }
+    }
+
+    private void handle_car_in_move(CarAgent agent) {
+        ACLMessage rejectResponse = new ACLMessage(ACLMessage.REJECT_PROPOSAL);
+        rejectResponse.setOntology("DestinationResponse");
+        try {
+            rejectResponse.setContentObject(new DestinationResponse(agent.getCurrentPosition(), agent.getAID(), agent.getDestination()!=null ));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        agent.send(rejectResponse);
     }
 }

@@ -19,30 +19,19 @@ import java.util.List;
  * Created by adam on 5/3/16.
  */
 public class CarAgent extends Agent {
-    private final int speed = 60;
+    private final int speed = 17; // That's approximate speed represented in m/s
+    private float chargedPercentage;
+    private boolean inMove = false;
     private IPosition currentPosition;
     private IPosition destination;
     private IPosition chargingPosition;
     private List<IPosition> route;
-    private MovingBehaviour movingBehaviour;
-    public List<TransactionCharger> chargingStations;
-
-
-    public IPosition getChargingPosition() {
-        return chargingPosition;
-    }
-
-    public void setChargingPosition(IPosition chargingPosition) {
-        this.chargingPosition = chargingPosition; //TODO has to inform the system to change the car for client
-        this.setDestination(chargingPosition);
-    }
-
-    //in percents
-    private float chargedLevel;
-    private boolean inMove = false;
-
     private List<ChargingStation> stations;
+    public List<TransactionCharger> chargingStations;
+    private MovingBehaviour movingBehaviour;
 
+    public CarAgent() {}
+    public IPosition getChargingPosition() { return chargingPosition; }
 
     public void UpdateStations(List<ChargingStation> stations)
     {
@@ -57,21 +46,25 @@ public class CarAgent extends Agent {
         return inMove;
     }
 
-    public void setInMove(boolean inMove) {
-        this.inMove = inMove;
-    }
+    public void setInMove(boolean inMove) { this.inMove = inMove; }
 
-    public float getChargedLevel() {
-        return chargedLevel;
-    }
+    public float getChargedPercentage() { return chargedPercentage; }
 
-    public void setChargedLevel(float chargedLevel) {
-        this.chargedLevel = chargedLevel;
-    }
+    public void setChargedPercentage(float chargedPercentage) { this.chargedPercentage = chargedPercentage; }
 
-    public CarAgent()
-    {
+    public IPosition getCurrentPosition() { return currentPosition; }
 
+    public void setCurrentPosition(IPosition position){ this.currentPosition = position; }
+
+    public IPosition getDestination() { return destination; }
+
+    public List<IPosition> getRoute() { return this.route; }
+
+    public int getSpeed() { return speed; }
+
+    public void setChargingPosition(IPosition chargingPosition) {
+        this.chargingPosition = chargingPosition; //TODO has to inform the system to change the car for client
+        this.setDestination(chargingPosition);
     }
 
     @Override
@@ -94,7 +87,7 @@ public class CarAgent extends Agent {
         route.add(new Position(38,35));
 
         System.out.println("Auto: "+ currentPosition);
-        chargedLevel = 90;
+        chargedPercentage = 90;
         Register();
     }
 
@@ -106,11 +99,6 @@ public class CarAgent extends Agent {
         addBehaviour(new CheckingFuelBehaviour(this,1000));
     }
 
-    public IPosition getCurrentPosition() {
-        return currentPosition;
-    }
-    public void setCurrentPosition(IPosition position){ this.currentPosition = position; }
-
     public void setDestination(IPosition destination) {
         this.destination = destination;
         this.inMove = true;
@@ -121,16 +109,5 @@ public class CarAgent extends Agent {
         this.destination = null;
         this.inMove = false;
         removeBehaviour(this.movingBehaviour);
-    }
-    public IPosition getDestination() {
-        return destination;
-    }
-
-    public List<IPosition> getRoute() {
-        return this.route;
-    }
-
-    public int getSpeed() {
-        return speed;
     }
 }

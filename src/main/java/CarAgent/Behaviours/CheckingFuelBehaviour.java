@@ -1,7 +1,6 @@
 package CarAgent.Behaviours;
 
 import CarAgent.CarAgent;
-import Common.AgentClasses.Car;
 import Common.AgentClasses.ChargingStation;
 import Common.Messages.ChargeRequest;
 import jade.core.Agent;
@@ -22,8 +21,8 @@ public class CheckingFuelBehaviour extends TickerBehaviour {
         CarAgent carAgent = (CarAgent)myAgent;
         if(carAgent.isInMove())
         {
-            carAgent.setChargedLevel(carAgent.getChargedLevel()-1 );
-            if (carAgent.getChargedLevel() < 20 && carAgent.getChargingPosition() == null)
+            carAgent.setChargedPercentage(carAgent.getChargedPercentage()-1 );
+            if (carAgent.getChargedPercentage() < 20 && carAgent.getChargingPosition() == null)
             {
                 ChargeRequest request = new ChargeRequest(carAgent.getAID());
                 ACLMessage requestMessage = new ACLMessage(ACLMessage.REQUEST);
