@@ -9,6 +9,7 @@ import Common.AgentClasses.TransactionCharger;
 import Common.AgentType;
 import Common.Behaviours.RegisterBehaviour;
 import Common.Position;
+import Common.Route;
 import jade.core.Agent;
 
 import java.util.ArrayList;
@@ -25,7 +26,8 @@ public class CarAgent extends Agent {
     private IPosition currentPosition;
     private IPosition destination;
     private IPosition chargingPosition;
-    private List<IPosition> route;
+    private List<IPosition> list_route;
+    private Route route;
     private List<ChargingStation> stations;
     public List<TransactionCharger> chargingStations;
     private MovingBehaviour movingBehaviour;
@@ -58,7 +60,7 @@ public class CarAgent extends Agent {
 
     public IPosition getDestination() { return destination; }
 
-    public List<IPosition> getRoute() { return this.route; }
+    public List<IPosition> getList_route() { return this.list_route; }
 
     public int getSpeed() { return speed; }
 
@@ -77,14 +79,14 @@ public class CarAgent extends Agent {
         chargingStations = new ArrayList<TransactionCharger>();
         
         //hardcoded just for debuging
-        this.route = new ArrayList<IPosition>();
-        route.add(new Position(41,40));
-        route.add(new Position(40,40));
-        route.add(new Position(40,39));
-        route.add(new Position(40,38));
-        route.add(new Position(40,37));
-        route.add(new Position(39,36));
-        route.add(new Position(38,35));
+        this.list_route = new ArrayList<IPosition>();
+        list_route.add(new Position(41,40));
+        list_route.add(new Position(40,40));
+        list_route.add(new Position(40,39));
+        list_route.add(new Position(40,38));
+        list_route.add(new Position(40,37));
+        list_route.add(new Position(39,36));
+        list_route.add(new Position(38,35));
 
         System.out.println("Auto: "+ currentPosition);
         chargedPercentage = 90;
@@ -109,5 +111,17 @@ public class CarAgent extends Agent {
         this.destination = null;
         this.inMove = false;
         removeBehaviour(this.movingBehaviour);
+    }
+
+    public boolean has_enough_fuel_for_trip(Route route) {
+        return this.chargedPercentage >= route.getDistance()/1000; // From m to km
+    }
+
+    public Route getRoute() {
+        return route;
+    }
+
+    public void setRoute(Route route) {
+        this.route = route;
     }
 }

@@ -3,6 +3,7 @@ package Common.Messages;
 import CarAgent.CarAgent;
 import Common.Abstract.ICarHandable;
 import Common.Abstract.IPosition;
+import Common.AgentClasses.ChargingStation;
 import Common.GoogleApiHelper.DirectionsClient;
 import Common.Route;
 import jade.lang.acl.ACLMessage;
@@ -13,7 +14,7 @@ import java.io.IOException;
  * Created by jedrek on 03.05.16.
  */
 public class DestinationRequest extends Message implements ICarHandable {
-    IPosition clientPosition; //nie wiem czy to jest potrzebne
+    private IPosition clientPosition;
 
     public DestinationRequest(IPosition clientPosition){
         this.clientPosition = clientPosition;
@@ -27,12 +28,37 @@ public class DestinationRequest extends Message implements ICarHandable {
         }
         else
         {
-            handle_car_occupied(agent);
+            reject_request(agent);
         }
     }
 
     private void handle_car_available(CarAgent agent, ACLMessage original) {
-        Route route = DirectionsClient.get_directions_from_car_to_target(agent, this.clientPosition);
+        Route route = DirectionsClient.get_directions_to_target(agent, this.clientPosition);
+        if(agent.has_enough_fuel_for_trip(route))
+            accept_request(agent, original, route);
+        else{
+            reject_request(agent);
+            make_charge_request(agent);
+        }
+    }
+
+    private void make_charge_request(CarAgent agent) {
+        ChargeRequest request = new ChargeRequest(agent.getAID());
+        ACLMessage requestMessage = new ACLMessage(ACLMessage.REQUEST);
+
+        for (ChargingStation station : agent.getStations()) {
+            requestMessage.addReceiver(station.getAid());
+        }
+
+        try {
+            requestMessage.setContentObject(request);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        agent.send(requestMessage);
+    }
+
+    private void accept_request(CarAgent agent, ACLMessage original, Route route) {
         ACLMessage acceptResponse = new ACLMessage(ACLMessage.ACCEPT_PROPOSAL);
         acceptResponse.addReceiver(original.getSender());
         try {
@@ -44,7 +70,7 @@ public class DestinationRequest extends Message implements ICarHandable {
         agent.send(acceptResponse);
     }
 
-    private void handle_car_occupied(CarAgent agent) {
+    private void reject_request(CarAgent agent) {
         ACLMessage rejectResponse = new ACLMessage(ACLMessage.REJECT_PROPOSAL);
         rejectResponse.setOntology("DestinationResponse");
         try {

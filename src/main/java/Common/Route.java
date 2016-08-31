@@ -2,16 +2,16 @@ package Common;
 
 import Common.Abstract.IPosition;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by jan on 31/08/16.
  */
-public class Route {
+public class Route implements Serializable{
     private List<IPosition> points;
     private long distance;
     private long time;
-    public Route(){}
     public Route(List<IPosition> points, long distance, long time){
         this.points = points;
         this.distance = distance;

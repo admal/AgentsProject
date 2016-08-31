@@ -27,22 +27,39 @@ public class DirectionsClient {
         return context;
     }
 
-    public static Route get_directions_from_car_to_target(CarAgent car, IPosition destination){
-        System.out.println(car.getLocalName()+": get_directions");
+    public static Route get_directions_to_target(CarAgent car, IPosition destination){
+        DirectionsApiRequest api_request = construct_directions_request(car, destination);
+        DirectionsResult google_api_response = await_response(api_request);
+        assert google_api_response != null;
+        return parse_google_api_response(google_api_response);
+    }
+
+    public static Route get_directions_to_target_through_point(CarAgent car, IPosition destination, IPosition _point){
+        DirectionsApiRequest api_request = construct_directions_request(car, destination);
+        api_request.waypoints(_point.toString());
+        DirectionsResult google_api_response = await_response(api_request);
+        assert google_api_response != null;
+        return parse_google_api_response(google_api_response);
+    }
+
+    private static DirectionsResult await_response(DirectionsApiRequest api_request) {
         DirectionsResult google_api_response = null;
+        try{
+            google_api_response = api_request.await();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return google_api_response;
+    }
+
+    private static DirectionsApiRequest construct_directions_request(CarAgent car, IPosition destination) {
         DirectionsApiRequest api_request = DirectionsApi.getDirections(
                     get_api_context(),
                     car.getCurrentPosition().toString(),
                     destination.toString()
                 );
         api_request.mode(TravelMode.DRIVING);
-        try{
-            google_api_response = api_request.await();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        assert google_api_response != null;
-        return parse_google_api_response(google_api_response);
+        return api_request;
     }
 
     private static Route parse_google_api_response(DirectionsResult google_api_response) {

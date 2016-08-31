@@ -21,7 +21,6 @@ public class CheckingFuelBehaviour extends TickerBehaviour {
         CarAgent carAgent = (CarAgent)myAgent;
         if(carAgent.isInMove())
         {
-            carAgent.setChargedPercentage(carAgent.getChargedPercentage()-1 );
             if (carAgent.getChargedPercentage() < 20 && carAgent.getChargingPosition() == null)
             {
                 ChargeRequest request = new ChargeRequest(carAgent.getAID());
