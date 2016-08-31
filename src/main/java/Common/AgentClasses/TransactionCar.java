@@ -29,10 +29,10 @@ public class TransactionCar {
         this.aid = aid;
     }
 
-    public TransactionCar(AID aid, IPosition position, boolean participates) {
+    public TransactionCar(AID aid, IPosition position, Route route, boolean participates) {
         this.aid = aid;
         this.position = position;
         this.participates = participates;
-        this.route = null;
+        this.route = route;
     }
 }
