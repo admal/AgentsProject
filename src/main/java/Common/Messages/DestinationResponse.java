@@ -4,15 +4,10 @@ import Common.Abstract.IMasterHandable;
 import Common.Abstract.IPosition;
 import Common.AgentClasses.Car;
 import Common.AgentClasses.TransactionCar;
-import Common.Position;
+import Common.GoogleApiHelper.Connector;
+import Common.Route;
 import MasterAgent.MasterAgent;
-import MasterAgent.behaviours.NewClientRequestBehaviour;
-import com.google.maps.DistanceMatrixApi;
-import com.google.maps.DistanceMatrixApiRequest;
 import com.google.maps.GeoApiContext;
-import com.google.maps.PendingResult;
-import com.google.maps.model.DistanceMatrix;
-import com.google.maps.model.DistanceMatrixRow;
 import com.google.maps.model.Duration;
 import jade.core.AID;
 import jade.lang.acl.ACLMessage;
@@ -20,8 +15,6 @@ import jade.lang.acl.ACLMessage;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import Common.GoogleApiHelper.Connector;
 
 
 /**
@@ -30,6 +23,7 @@ import Common.GoogleApiHelper.Connector;
  */
 public class DestinationResponse extends Message implements IMasterHandable {
     private IPosition position;
+    private Route route;
     private AID aid;
     private boolean participate;
     private MasterAgent agent;
@@ -38,6 +32,16 @@ public class DestinationResponse extends Message implements IMasterHandable {
         this.position = position;
         this.aid = aid;
         this.participate = participate;
+        this.route = null;
+        this.agent = null;
+    }
+
+    public DestinationResponse(IPosition position, Route route, AID aid, boolean participate) {
+        this.position = position;
+        this.aid = aid;
+        this.participate = participate;
+        this.route = route;
+        this.agent = null;
     }
 
     public void Handle(MasterAgent agent, ACLMessage msg) {

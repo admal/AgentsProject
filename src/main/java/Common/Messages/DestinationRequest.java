@@ -33,11 +33,10 @@ public class DestinationRequest extends Message implements ICarHandable {
 
     private void handle_car_available(CarAgent agent, ACLMessage original) {
         Route route = DirectionsClient.get_directions_from_car_to_target(agent, this.clientPosition);
-
         ACLMessage acceptResponse = new ACLMessage(ACLMessage.ACCEPT_PROPOSAL);
         acceptResponse.addReceiver(original.getSender());
         try {
-            acceptResponse.setContentObject(new DestinationResponse(agent.getCurrentPosition(), agent.getAID(), true));
+            acceptResponse.setContentObject(new DestinationResponse(agent.getCurrentPosition(), route, agent.getAID(), true));
         } catch (IOException e) {
             e.printStackTrace();
         }
