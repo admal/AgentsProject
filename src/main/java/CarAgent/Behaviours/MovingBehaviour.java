@@ -17,10 +17,12 @@ public class MovingBehaviour extends TickerBehaviour {
     }
     protected void onTick() {
         if(positionIndex<parentAgent.getRoute().size()){
-            float kilometers = DistanceHelper.from_geographic_to_km(parentAgent.getCurrentPosition().GetX(),
+            float kilometers = DistanceHelper.from_geographic_to_km(
+                    parentAgent.getCurrentPosition().GetX(),
                     parentAgent.getCurrentPosition().GetY(),
                     parentAgent.getRoute().get(positionIndex).GetX(),
-                    parentAgent.getRoute().get(positionIndex).GetY());
+                    parentAgent.getRoute().get(positionIndex).GetY()
+            );
             parentAgent.setCurrentPosition(parentAgent.getRoute().get(positionIndex));
             parentAgent.setChargedPercentage(parentAgent.getChargedPercentage() - (int)kilometers);
             positionIndex++;

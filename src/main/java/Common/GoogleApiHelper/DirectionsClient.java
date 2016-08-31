@@ -3,6 +3,7 @@ package Common.GoogleApiHelper;
 import CarAgent.CarAgent;
 import Common.Abstract.IPosition;
 import Common.Position;
+import Common.Route;
 import com.google.maps.DirectionsApi;
 import com.google.maps.DirectionsApiRequest;
 import com.google.maps.GeoApiContext;
@@ -12,6 +13,7 @@ import com.google.maps.model.LatLng;
 import com.google.maps.model.TravelMode;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by jan on 30/08/16.
@@ -25,7 +27,8 @@ public class DirectionsClient {
         return context;
     }
 
-    public static ArrayList<IPosition> get_directions_from_car_to_target(CarAgent car, IPosition destination){
+    public static Route get_directions_from_car_to_target(CarAgent car, IPosition destination){
+        System.out.println(car.getLocalName()+": get_directions");
         DirectionsResult google_api_response = null;
         DirectionsApiRequest api_request = DirectionsApi.getDirections(
                     get_api_context(),
@@ -42,13 +45,16 @@ public class DirectionsClient {
         return parse_google_api_response(google_api_response);
     }
 
-    private static ArrayList<IPosition> parse_google_api_response(DirectionsResult google_api_response) {
-        ArrayList<IPosition> result = new ArrayList<IPosition>();
-        result.add(latlng_to_position(google_api_response.routes[0].legs[0].steps[0].startLocation));
+    private static Route parse_google_api_response(DirectionsResult google_api_response) {
+        List<IPosition> points = new ArrayList<IPosition>();
+        points.add(latlng_to_position(google_api_response.routes[0].legs[0].steps[0].startLocation));
         for(DirectionsStep step : google_api_response.routes[0].legs[0].steps){
-            result.add(latlng_to_position(step.endLocation));
+            points.add(latlng_to_position(step.endLocation));
         }
-        return result;
+        long distance = google_api_response.routes[0].legs[0].distance.inMeters;
+        long time = google_api_response.routes[0].legs[0].duration.inSeconds;
+        Route route = new Route(points,distance,time);
+        return route;
     }
 
     private static Position latlng_to_position(LatLng lng){
