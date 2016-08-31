@@ -4,16 +4,12 @@ import Common.Abstract.IMasterHandable;
 import Common.Abstract.IPosition;
 import Common.AgentClasses.Car;
 import Common.AgentClasses.TransactionCar;
-import Common.GoogleApiHelper.Connector;
 import Common.Route;
 import MasterAgent.MasterAgent;
-import com.google.maps.GeoApiContext;
-import com.google.maps.model.Duration;
 import jade.core.AID;
 import jade.lang.acl.ACLMessage;
 
 import java.io.IOException;
-import java.util.Iterator;
 import java.util.List;
 
 
@@ -49,8 +45,7 @@ public class DestinationResponse extends Message implements IMasterHandable {
         agent.carsInCurrentTransaction.add(new TransactionCar(this.aid, this.position, this.route, this.participate));
 
         if (agent.carsInCurrentTransaction.size() == agent.cars.size()) {
-
-            AID bestCar = getBestCarAID(agent.carsInCurrentTransaction, agent.currentClientPosition);
+            AID bestCar = getBestCarAID(agent.carsInCurrentTransaction);
             if (bestCar != null) {
                 ACLMessage replyMsg = new ACLMessage(ACLMessage.CONFIRM);
                 try {
@@ -78,29 +73,18 @@ public class DestinationResponse extends Message implements IMasterHandable {
     }
 
 
-    private AID getBestCarAID(List<TransactionCar> cars, IPosition destination) {
-        TransactionCar car, bestCar = null;
-        double bestDistance = Double.MAX_VALUE, distance;
-        Iterator<TransactionCar> it = cars.iterator();
-        GeoApiContext gapiContext = Connector.getGeoApiContext();
-
-        Duration[] durations = Connector.getCarDurationsMatrix(gapiContext, cars, destination);
-        int fin = 0;
-        boolean found = false;
-        for (int i = 0; i < durations.length; i++) {
-            if (durations[i].inSeconds <= durations[fin].inSeconds && cars.get(i).isParticipates()) {
-                found = true;
-                fin = i;
-            }
+    private AID getBestCarAID(List<TransactionCar> cars) {
+        TransactionCar bestCar = null;
+        for(TransactionCar _car : cars){
+            if(bestCar==null)
+                bestCar = _car.isParticipates() ? _car : null;
+            else if(_car.getRoute().getTime() < bestCar.getRoute().getTime() && _car.isParticipates())
+                bestCar = _car;
         }
-
-        bestCar = cars.get(fin);
-
-        if (bestCar == null || !found) {
+        if (bestCar == null) {
             System.out.println("No suitable car found.");
             return null;
         }
-
         return bestCar.getAid();
     }
 

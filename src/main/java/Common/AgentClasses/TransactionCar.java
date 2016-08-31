@@ -35,4 +35,8 @@ public class TransactionCar {
         this.participates = participates;
         this.route = route;
     }
+
+    public Route getRoute() {
+        return route;
+    }
 }
