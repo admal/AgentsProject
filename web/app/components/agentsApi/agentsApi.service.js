@@ -66,6 +66,10 @@ app.service("AgentsApi", function($http ) {
 
         return $http.post('api/addclient', data, config);
     };
+    
+    vm.addCar = function(success, error) {
+        postResource('api/cars', success, error);
+    }
 
     vm.startAgentPlatform = function (success, error) {
         getResource('api/start_simulation', success, error);

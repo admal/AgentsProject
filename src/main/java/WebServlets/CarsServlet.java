@@ -3,6 +3,7 @@ package WebServlets;
 import Common.AgentClasses.Car;
 import Common.AgentType;
 import Common.Position;
+import Common.Starter;
 import Common.WebModels.CarAgentWebModel;
 import MasterAgent.IMasterAgent;
 import com.google.gson.Gson;
@@ -12,6 +13,8 @@ import com.google.maps.GeoApiContext;
 import com.google.maps.PendingResult;
 import com.google.maps.model.DistanceMatrix;
 import com.google.maps.model.Duration;
+import jade.wrapper.AgentController;
+import jade.wrapper.StaleProxyException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -28,7 +31,16 @@ import java.util.List;
 @WebServlet(name = "CarsServlet")
 public class CarsServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        try {
+            Object[] args = new Object[1];
+            args[0] = new Position((float)52.26881, (float)21.04666); //TMP!!!
+            AgentController carAgent = Starter.mainContainer.createNewAgent("auto" + (WebGlobals.getInstance().masterAgent.getCars().size()+1) ,"CarAgent.CarAgent", args);
+            carAgent.start();
+        } catch (StaleProxyException e) {
+            e.printStackTrace();
+            response.sendError(500, "Could not create car agent!");
+        }
+        response.setStatus(HttpServletResponse.SC_CREATED);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

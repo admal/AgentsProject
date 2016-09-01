@@ -6,6 +6,7 @@ app.service("AgentsService", function($interval, AgentsApi, $log){
 
     vm.cars = [];
     vm.stations = [];
+    var geocoder = new google.maps.Geocoder();
 
     vm.getAgentsData = function () {
         AgentsApi.GetCars(function(response){
@@ -15,6 +16,11 @@ app.service("AgentsService", function($interval, AgentsApi, $log){
 
         AgentsApi.GetStationaryAgents(function(response){
             vm.stations = response.data;
+            // vm.stations.forEach(function(curr){
+            //     geocoder.geocode({location: {"lat": curr.position.x, "lng": curr.position.y}}, function(result, status){
+            //         curr.address = result[0].formatted_address;
+            //     });
+            // });
             $log.info('stations updated');
         }, onApiError);
     };

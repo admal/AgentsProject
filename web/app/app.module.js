@@ -3,5 +3,6 @@
  */
 var app = angular.module('app', [
     'ui.router',
-    'uiGmapgoogle-maps'
+    'uiGmapgoogle-maps',
+    'ngDialog'
 ]);

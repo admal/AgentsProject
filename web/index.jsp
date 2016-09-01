@@ -5,7 +5,10 @@
     <title>Autonomous electric car system</title>
 
     <link rel="stylesheet" href="assets/css/bootstrap.css" />
-    <link rel="stylesheet" href="assets/css/bootstrap-theme.css">
+    <link rel="stylesheet" href="assets/css/bootstrap-theme.css" />
+    <link rel="stylesheet" href="assets/css/ngDialog.css" />
+    <link rel="stylesheet" href="assets/css/ngDialog-theme-default.css" />
+    <link rel="stylesheet" href="assets/css/app.css" />
     <script type="text/javascript"
             src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
     <style>
@@ -18,6 +21,10 @@
 <div class="container-fluid" style="padding: 0;">
     <div class="row">
         <div ng-controller="HomeController as home">
+            <div class="add-buttons-container">
+                <span class="add-button car" ng-click="home.addCar()"></span>
+                <span class="add-button station"  ng-click="home.addStationClick()"></span>
+            </div>
             <div class="col-lg-12">
                 <ui-gmap-google-map center='home.map.center' zoom='home.map.zoom' control="home.map.control">
                     <ui-gmap-layer type="TrafficLayer"></ui-gmap-layer>
@@ -40,6 +47,7 @@
     <script src="assets/js/angular-ui-router.js"></script>
     <script src="assets/js/angular-simple-logger.js"></script>
     <script src="assets/js/angular-google-maps.js"></script>
+    <script src="assets/js/ngDialog.js"></script>
     <!--APP-->
     <script src="app/app.module.js"></script>
     <script src="app/app.routes.js"></script>

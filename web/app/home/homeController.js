@@ -1,7 +1,7 @@
 /**
  * Created by adam on 6/4/16.
  */
-app.controller('HomeController', function ($scope, uiGmapIsReady, $timeout, $log, AgentsService, AgentsApi) {
+app.controller('HomeController', function ($scope, uiGmapIsReady, $timeout, $log, AgentsService, AgentsApi, ngDialog) {
 //app.controller('HomeController',['$scope', 'AgentsService','uiGmapIsReady' , function ($scope, AgentsService, uiGmapIsReady) {
     var vm = this;
     
@@ -60,6 +60,14 @@ app.controller('HomeController', function ($scope, uiGmapIsReady, $timeout, $log
     };
     uiGmapIsReady.promise().then(function(maps) {});
 
+    vm.addStationClick = function () {
+        ngDialog.open({
+            template: 'app/home/addStationModal.html',
+            className: 'ngdialog-theme-default',
+            controller: 'StationModalController',
+            controllerAs: 'stationModal',
+        });
+    };
     vm.addStation = function(station)
     {
         AgentsApi.AddStation(station, function (response) {
@@ -75,6 +83,12 @@ app.controller('HomeController', function ($scope, uiGmapIsReady, $timeout, $log
         }).error(function(){
             vm.errorMsg = "Sth went wrong :(";
         });
+    };
+
+    vm.addCar = function () {
+        AgentsApi.addCar(function (response) {
+            $log.info('car created');
+        }, onError);
     };
 
     function onError(reason) {
@@ -104,3 +118,19 @@ function marker(id, x, y, icon, name) {
         "labelContent": name
     }
 }
+
+
+app.controller('StationModalController', function ($scope, $log, AgentsService, AgentsApi) {
+    var vm = this;
+    vm.addStation = function(station)
+    {
+        AgentsApi.AddStation(station, function (response) {
+            $log.info(response);
+            alert('Station added!');
+            $scope.closeThisDialog();
+        }, function (reason) {
+            $log.error(reason);
+            $scope.closeThisDialog();
+        });
+    };
+});
