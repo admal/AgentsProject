@@ -46,6 +46,8 @@ public class MovingBehaviour extends TickerBehaviour {
     }
 
     private void checkIfArrived() {
+        if(this.agent.getCurrentPosition() == this.agent.getRoute().getPoints().get(this.agent.getRoute().getPoints().size()-1))
+            this.agent.stop();
     }
 
     private void updatePower() {
