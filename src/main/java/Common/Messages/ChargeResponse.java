@@ -3,21 +3,17 @@ package Common.Messages;
 import CarAgent.CarAgent;
 import Common.Abstract.ICarHandable;
 import Common.Abstract.IPosition;
-import Common.AgentClasses.ChargingStation;
-import Common.AgentClasses.TransactionCar;
 import Common.AgentClasses.TransactionCharger;
 import Common.GoogleApiHelper.Connector;
-import com.google.maps.DistanceMatrixApi;
-import com.google.maps.DistanceMatrixApiRequest;
 import com.google.maps.GeoApiContext;
-import com.google.maps.model.DistanceMatrix;
-import com.google.maps.model.DistanceMatrixRow;
 import com.google.maps.model.Duration;
 import jade.core.AID;
 import jade.lang.acl.ACLMessage;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
+import java.util.ListIterator;
 
 /**
  * Created by janbaraniewski on 03/05/16.
@@ -34,7 +30,7 @@ public class ChargeResponse extends Message implements ICarHandable {
 
     public void Handle(CarAgent agent, ACLMessage original) {
         agent.chargingStations.add(new TransactionCharger(aid, waitingTime, chargerPosition)); //charging station
-        long time = (long)((100 - agent.getChargedLevel()) * 30); //each percent requires reservation for 30 sec
+        long time = (long)((100 - agent.getChargedPercentage()) * 30); //each percent requires reservation for 30 sec
         if(agent.chargingStations.size() == agent.getStations().size()){
             //Chooses the best charging station and sends the time reservation
             System.out.println("Looking for the best charging station.");
