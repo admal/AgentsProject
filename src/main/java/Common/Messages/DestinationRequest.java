@@ -24,25 +24,25 @@ public class DestinationRequest extends Message implements ICarHandable {
         System.out.println(agent.getLocalName() + ": Destination request handled");
         if(!agent.isInMove())
         {
-            handle_car_available(agent, original);
+            handleCarAvailable(agent, original);
         }
         else
         {
-            reject_request(agent);
+            rejectRequest(agent);
         }
     }
 
-    private void handle_car_available(CarAgent agent, ACLMessage original) {
-        Route route = DirectionsClient.get_directions_to_target(agent, this.clientPosition);
-        if(agent.has_enough_fuel_for_trip(route))
-            accept_request(agent, original, route);
+    private void handleCarAvailable(CarAgent agent, ACLMessage original) {
+        Route route = DirectionsClient.getDirectionsToTarget(agent, this.clientPosition);
+        if(agent.hasEnoughFuelForTrip(route))
+            acceptRequest(agent, original, route);
         else{
-            reject_request(agent);
-            make_charge_request(agent);
+            rejectRequest(agent);
+            makeChargeRequest(agent);
         }
     }
 
-    private void make_charge_request(CarAgent agent) {
+    private void makeChargeRequest(CarAgent agent) {
         ChargeRequest request = new ChargeRequest(agent.getAID());
         ACLMessage requestMessage = new ACLMessage(ACLMessage.REQUEST);
 
@@ -58,7 +58,7 @@ public class DestinationRequest extends Message implements ICarHandable {
         agent.send(requestMessage);
     }
 
-    private void accept_request(CarAgent agent, ACLMessage original, Route route) {
+    private void acceptRequest(CarAgent agent, ACLMessage original, Route route) {
         ACLMessage acceptResponse = new ACLMessage(ACLMessage.ACCEPT_PROPOSAL);
         acceptResponse.addReceiver(original.getSender());
         try {
@@ -70,7 +70,7 @@ public class DestinationRequest extends Message implements ICarHandable {
         agent.send(acceptResponse);
     }
 
-    private void reject_request(CarAgent agent) {
+    private void rejectRequest(CarAgent agent) {
         ACLMessage rejectResponse = new ACLMessage(ACLMessage.REJECT_PROPOSAL);
         rejectResponse.setOntology("DestinationResponse");
         try {

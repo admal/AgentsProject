@@ -27,22 +27,22 @@ public class DirectionsClient {
         return context;
     }
 
-    public static Route get_directions_to_target(CarAgent car, IPosition destination){
-        DirectionsApiRequest api_request = construct_directions_request(car, destination);
-        DirectionsResult google_api_response = await_response(api_request);
+    public static Route getDirectionsToTarget(CarAgent car, IPosition destination){
+        DirectionsApiRequest api_request = constructDirectionsRequest(car, destination);
+        DirectionsResult google_api_response = awaitResponse(api_request);
         assert google_api_response != null;
-        return parse_google_api_response(google_api_response);
+        return parseGoogleApiResponse(google_api_response);
     }
 
-    public static Route get_directions_to_target_through_point(CarAgent car, IPosition destination, IPosition _point){
-        DirectionsApiRequest api_request = construct_directions_request(car, destination);
+    public static Route getDirectionsToTargetThroughPoint(CarAgent car, IPosition destination, IPosition _point){
+        DirectionsApiRequest api_request = constructDirectionsRequest(car, destination);
         api_request.waypoints(_point.toString());
-        DirectionsResult google_api_response = await_response(api_request);
+        DirectionsResult google_api_response = awaitResponse(api_request);
         assert google_api_response != null;
-        return parse_google_api_response(google_api_response);
+        return parseGoogleApiResponse(google_api_response);
     }
 
-    private static DirectionsResult await_response(DirectionsApiRequest api_request) {
+    private static DirectionsResult awaitResponse(DirectionsApiRequest api_request) {
         DirectionsResult google_api_response = null;
         try{
             google_api_response = api_request.await();
@@ -52,7 +52,7 @@ public class DirectionsClient {
         return google_api_response;
     }
 
-    private static DirectionsApiRequest construct_directions_request(CarAgent car, IPosition destination) {
+    private static DirectionsApiRequest constructDirectionsRequest(CarAgent car, IPosition destination) {
         DirectionsApiRequest api_request = DirectionsApi.getDirections(
                     get_api_context(),
                     car.getCurrentPosition().toString(),
@@ -62,11 +62,11 @@ public class DirectionsClient {
         return api_request;
     }
 
-    private static Route parse_google_api_response(DirectionsResult google_api_response) {
+    private static Route parseGoogleApiResponse(DirectionsResult google_api_response) {
         List<IPosition> points = new ArrayList<IPosition>();
-        points.add(latlng_to_position(google_api_response.routes[0].legs[0].steps[0].startLocation));
+        points.add(latlngToPosition(google_api_response.routes[0].legs[0].steps[0].startLocation));
         for(DirectionsStep step : google_api_response.routes[0].legs[0].steps){
-            points.add(latlng_to_position(step.endLocation));
+            points.add(latlngToPosition(step.endLocation));
         }
         long distance = google_api_response.routes[0].legs[0].distance.inMeters;
         long time = google_api_response.routes[0].legs[0].duration.inSeconds;
@@ -74,7 +74,7 @@ public class DirectionsClient {
         return route;
     }
 
-    private static Position latlng_to_position(LatLng lng){
+    private static Position latlngToPosition(LatLng lng){
         return new Position((float)lng.lat, (float)lng.lng);
     }
 }

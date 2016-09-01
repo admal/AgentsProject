@@ -113,7 +113,7 @@ public class CarAgent extends Agent {
         removeBehaviour(this.movingBehaviour);
     }
 
-    public boolean has_enough_fuel_for_trip(Route route) {
+    public boolean hasEnoughFuelForTrip(Route route) {
         return this.chargedPercentage >= route.getDistance()/1000; // From m to km
     }
 
