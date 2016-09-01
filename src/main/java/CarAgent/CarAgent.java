@@ -22,6 +22,7 @@ import java.util.List;
  */
 public class CarAgent extends Agent {
     private final int speed = 17; // That's approximate speed represented in m/s
+    private final int powerPercentPerMeeters = 1000; // 1% / 1000m
     private float chargedPercentage;
     private boolean inMove = false;
     private IPosition currentPosition;
@@ -129,5 +130,9 @@ public class CarAgent extends Agent {
 
     public void setRoute(Route route) {
         this.route = route;
+    }
+
+    public int getPowerPercentPerMeeters() {
+        return powerPercentPerMeeters;
     }
 }

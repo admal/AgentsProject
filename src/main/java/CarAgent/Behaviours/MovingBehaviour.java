@@ -14,16 +14,28 @@ public class MovingBehaviour extends TickerBehaviour {
     private int current_subroute_end_id;
     private IPosition step;
     private IPosition direction;
+    private float meters_to_burn;
+
 
     public MovingBehaviour(CarAgent agent, long period){
         super(agent,period);
         this.agent = agent;
         this.current_subroute_end_id = 1;
         this.step = this.calculateStep();
+        this.meters_to_burn = 0;
     }
     protected void onTick() {
         this.moveForward();
+        this.updatePower();
         this.checkIfArrived();
+    }
+
+    private void updatePower() {
+        this.meters_to_burn+=this.agent.getSpeed();
+        if(this.meters_to_burn/this.agent.getPowerPercentPerMeeters()>1){
+            this.meters_to_burn-=this.agent.getPowerPercentPerMeeters();
+            this.agent.setChargedPercentage(this.agent.getChargedPercentage()-1);
+        }
     }
 
     private IPosition calculateStep() {
@@ -46,12 +58,14 @@ public class MovingBehaviour extends TickerBehaviour {
     }
 
     private void checkIfArrived() {
-        if(this.agent.getCurrentPosition() == this.agent.getRoute().getPoints().get(this.agent.getRoute().getPoints().size()-1))
+        if(this.agent.getCurrentPosition() == this.agent.getRoute().getPoints().get(this.agent.getRoute().getPoints().size()-1)){
+            this.agent.setChargedPercentage(this.agent.getChargedPercentage()-((1/this.agent.getPowerPercentPerMeeters())*this.meters_to_burn));
             this.agent.stop();
-        else   if(this.direction.GetX() == -1 && this.agent.getCurrentPosition().GetX() < this.agent.getRoute().getPoints().get(this.current_subroute_end_id).GetX()
+       } else   if(this.direction.GetX() == -1 && this.agent.getCurrentPosition().GetX() < this.agent.getRoute().getPoints().get(this.current_subroute_end_id).GetX()
                 || this.direction.GetX() == 1 && this.agent.getCurrentPosition().GetX() > this.agent.getRoute().getPoints().get(this.current_subroute_end_id).GetX()){
             IPosition newPosition = this.agent.getRoute().getPoints().get(this.current_subroute_end_id);
             this.agent.setCurrentPosition(newPosition);
+            this.agent.setChargedPercentage(this.agent.getChargedPercentage()-((1/this.agent.getPowerPercentPerMeeters())*this.meters_to_burn));
             this.agent.stop();
         }
 
