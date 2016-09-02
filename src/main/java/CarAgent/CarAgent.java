@@ -8,6 +8,7 @@ import Common.AgentClasses.ChargingStation;
 import Common.AgentClasses.TransactionCharger;
 import Common.AgentType;
 import Common.Behaviours.RegisterBehaviour;
+import Common.GoogleApiHelper.DirectionsClient;
 import Common.Position;
 import Common.Route;
 import jade.core.Agent;
@@ -21,6 +22,7 @@ import java.util.List;
  */
 public class CarAgent extends Agent {
     private final int speed = 17; // That's approximate speed represented in m/s
+    private final int powerPercentPerMeeters = 1000; // 1% / 1000m
     private float chargedPercentage;
     private boolean inMove = false;
     private IPosition currentPosition;
@@ -56,7 +58,10 @@ public class CarAgent extends Agent {
 
     public IPosition getCurrentPosition() { return currentPosition; }
 
-    public void setCurrentPosition(IPosition position){ this.currentPosition = position; }
+    public void setCurrentPosition(IPosition position){
+        this.currentPosition = position;
+        System.out.println(this.getLocalName()+" new position "+this.currentPosition.toString());
+    }
 
     public IPosition getDestination() { return destination; }
 
@@ -103,6 +108,8 @@ public class CarAgent extends Agent {
     public void setDestination(IPosition destination) {
         this.destination = destination;
         this.inMove = true;
+        this.route = DirectionsClient.getDirectionsToTarget(this, destination);
+        this.currentPosition = this.route.getPoints().get(0);
         this.movingBehaviour = new MovingBehaviour(this,1000);
         addBehaviour(this.movingBehaviour);
     }
@@ -122,5 +129,9 @@ public class CarAgent extends Agent {
 
     public void setRoute(Route route) {
         this.route = route;
+    }
+
+    public int getPowerPercentPerMeeters() {
+        return powerPercentPerMeeters;
     }
 }

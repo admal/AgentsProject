@@ -5,7 +5,7 @@ package Common;
  */
 public class DistanceHelper {
     private DistanceHelper(){}
-    public static float from_geographic_to_km(float lat1, float lon1, float lat2, float lon2){
+    public static float fromGeographicToKm(float lat1, float lon1, float lat2, float lon2){
         double theta = lon1 - lon2;
         float distance = (float) (Math.sin(deg2rad(lat1))
                 * Math.sin(deg2rad(lat2))
@@ -17,6 +17,17 @@ public class DistanceHelper {
         distance = (float) (distance * 60 * 1.1515);
         distance = (float) (distance * 1.609344);
         return distance;
+    }
+    public static float fromGeographicToM(float lat1, float lon1, float lat2, float lon2){
+        double earthRadius = 6371000; //meters
+        double dLat = Math.toRadians(lat2-lat1);
+        double dLng = Math.toRadians(lon2-lon1);
+        double a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) *
+                        Math.sin(dLng/2) * Math.sin(dLng/2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+
+        return (float) (earthRadius * c);
     }
     private static float deg2rad(double deg) {
         return (float) (deg * Math.PI / 180.0);
