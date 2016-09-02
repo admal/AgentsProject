@@ -4,24 +4,13 @@ import Common.Abstract.IMasterHandable;
 import Common.Abstract.IPosition;
 import Common.AgentClasses.Car;
 import Common.AgentClasses.TransactionCar;
-import Common.Position;
+import Common.Route;
 import MasterAgent.MasterAgent;
-import MasterAgent.behaviours.NewClientRequestBehaviour;
-import com.google.maps.DistanceMatrixApi;
-import com.google.maps.DistanceMatrixApiRequest;
-import com.google.maps.GeoApiContext;
-import com.google.maps.PendingResult;
-import com.google.maps.model.DistanceMatrix;
-import com.google.maps.model.DistanceMatrixRow;
-import com.google.maps.model.Duration;
 import jade.core.AID;
 import jade.lang.acl.ACLMessage;
 
 import java.io.IOException;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import Common.GoogleApiHelper.Connector;
 
 
 /**
@@ -30,6 +19,7 @@ import Common.GoogleApiHelper.Connector;
  */
 public class DestinationResponse extends Message implements IMasterHandable {
     private IPosition position;
+    private Route route;
     private AID aid;
     private boolean participate;
     private MasterAgent agent;
@@ -38,15 +28,24 @@ public class DestinationResponse extends Message implements IMasterHandable {
         this.position = position;
         this.aid = aid;
         this.participate = participate;
+        this.route = null;
+        this.agent = null;
+    }
+
+    public DestinationResponse(IPosition position, Route route, AID aid, boolean participate) {
+        this.position = position;
+        this.aid = aid;
+        this.participate = participate;
+        this.route = route;
+        this.agent = null;
     }
 
     public void Handle(MasterAgent agent, ACLMessage msg) {
         this.agent = agent;
-        agent.carsInCurrentTransaction.add(new TransactionCar(aid, position, participate));
+        agent.carsInCurrentTransaction.add(new TransactionCar(this.aid, this.position, this.route, this.participate));
 
         if (agent.carsInCurrentTransaction.size() == agent.cars.size()) {
-
-            AID bestCar = getBestCarAID(agent.carsInCurrentTransaction, agent.currentClientPosition);
+            AID bestCar = getBestCarAID(agent.carsInCurrentTransaction);
             if (bestCar != null) {
                 ACLMessage replyMsg = new ACLMessage(ACLMessage.CONFIRM);
                 try {
@@ -74,29 +73,18 @@ public class DestinationResponse extends Message implements IMasterHandable {
     }
 
 
-    private AID getBestCarAID(List<TransactionCar> cars, IPosition destination) {
-        TransactionCar car, bestCar = null;
-        double bestDistance = Double.MAX_VALUE, distance;
-        Iterator<TransactionCar> it = cars.iterator();
-        GeoApiContext gapiContext = Connector.getGeoApiContext();
-
-        Duration[] durations = Connector.getCarDurationsMatrix(gapiContext, cars, destination);
-        int fin = 0;
-        boolean found = false;
-        for (int i = 0; i < durations.length; i++) {
-            if (durations[i].inSeconds <= durations[fin].inSeconds && cars.get(i).isParticipates()) {
-                found = true;
-                fin = i;
-            }
+    private AID getBestCarAID(List<TransactionCar> cars) {
+        TransactionCar bestCar = null;
+        for(TransactionCar _car : cars){
+            if(bestCar==null)
+                bestCar = _car.isParticipates() ? _car : null;
+            else if(_car.getRoute().getTime() < bestCar.getRoute().getTime() && _car.isParticipates())
+                bestCar = _car;
         }
-
-        bestCar = cars.get(fin);
-
-        if (bestCar == null || !found) {
+        if (bestCar == null) {
             System.out.println("No suitable car found.");
             return null;
         }
-
         return bestCar.getAid();
     }
 

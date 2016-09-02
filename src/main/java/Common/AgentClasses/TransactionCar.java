@@ -1,6 +1,7 @@
 package Common.AgentClasses;
 
 import Common.Abstract.IPosition;
+import Common.Route;
 import jade.core.AID;
 
 /**
@@ -9,6 +10,7 @@ import jade.core.AID;
 public class TransactionCar {
     private AID aid;
     private IPosition position;
+    private Route route;
     private boolean participates;
 
     public IPosition getPosition() {
@@ -27,9 +29,14 @@ public class TransactionCar {
         this.aid = aid;
     }
 
-    public TransactionCar(AID aid, IPosition position, boolean participates) {
+    public TransactionCar(AID aid, IPosition position, Route route, boolean participates) {
         this.aid = aid;
         this.position = position;
         this.participates = participates;
+        this.route = route;
+    }
+
+    public Route getRoute() {
+        return route;
     }
 }
