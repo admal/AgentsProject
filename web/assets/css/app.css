@@ -22,6 +22,9 @@
 .add-button.station {
     background-image: url('../images/ChargingStation.png');
 }
+.add-button.client {
+    background-image: url('../images/Call.gif');
+}
 .add-button:hover {
     background-image: url('../images/Plus.png');
     cursor: pointer;

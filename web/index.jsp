@@ -24,6 +24,7 @@
             <div class="add-buttons-container">
                 <span class="add-button car" ng-click="home.addCar()"></span>
                 <span class="add-button station"  ng-click="home.addStationClick()"></span>
+                <span class="add-button client"  ng-click="home.addClientClick()"></span>
             </div>
             <div class="col-lg-12">
                 <ui-gmap-google-map center='home.map.center' zoom='home.map.zoom' control="home.map.control">

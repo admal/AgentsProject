@@ -8,11 +8,13 @@
             <tr>
                 <th>Name</th>
                 <th>Position</th>
+                <th>Destination</th>
                 <th>Fuel level</th>
             </tr>
             <tr ng-repeat="car in cars.cars">
                 <td><img src="assets/images/Car.png" /> <b>{{car.name}}</b></td>
-                <td>{{car.position}}</td>
+                <td>{{car.position}} <br> {{car.positionAddress}}</td>
+                <td>{{car.destination}} <br> {{car.destinationAddress}}</td>
                 <td>
                     <div class="progress">
                         <div class="progress-bar progress-bar-striped active"

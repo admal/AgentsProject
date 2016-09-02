@@ -11,8 +11,7 @@ app.controller('HomeController', function ($scope, uiGmapIsReady, $timeout, $log
     vm.clientsCoordinants = [];
     function setMarkers()
     {
-
-        vm.map.markers.length= []; //reset the array
+        vm.map.markers = []; //reset the array
         if(vm.stationaryAgents !== null){
             vm.stationaryAgents.forEach(function(curr, index, arr){
   
@@ -22,9 +21,12 @@ app.controller('HomeController', function ($scope, uiGmapIsReady, $timeout, $log
         if(vm.carAgents !== null){
             vm.carAgents.forEach(function (curr, index, arr){
                 vm.map.markers.push(new marker(index+vm.stationaryAgents.length,curr.position.x, curr.position.y, "assets/images/Car.png", curr.name));
+                if(curr.destination !== null && angular.isDefined(curr.destination)) {
+                    vm.map.markers.push(new marker(100 + index, curr.destination.x, curr.destination.y, "assets/images/Destination.png", curr.name));
+                }
             });
-            vm.calcRoutes();
-
+            //vm.calcRoutes();
+            //$log.info('markers', vm.map.markers);
         }
     }
 
@@ -74,6 +76,15 @@ app.controller('HomeController', function ($scope, uiGmapIsReady, $timeout, $log
             $log.info(response);
             alert('Station added!');
         }, onError);
+    };
+
+    vm.addClientClick = function() {
+        ngDialog.open({
+            template: 'app/home/addClientModal.html',
+            className: 'ngdialog-theme-default',
+            controller: 'ClientModalController',
+            controllerAs: 'clientModal',
+        });
     };
 
     vm.addClient = function (client) {
@@ -127,6 +138,21 @@ app.controller('StationModalController', function ($scope, $log, AgentsService, 
         AgentsApi.AddStation(station, function (response) {
             $log.info(response);
             alert('Station added!');
+            $scope.closeThisDialog();
+        }, function (reason) {
+            $log.error(reason);
+            $scope.closeThisDialog();
+        });
+    };
+});
+
+app.controller('ClientModalController', function ($scope, $log, AgentsService, AgentsApi) {
+    var vm = this;
+    vm.addStation = function(client)
+    {
+        AgentsApi.addClient(client, function (response) {
+            $log.info(response);
+            alert('Client added!');
             $scope.closeThisDialog();
         }, function (reason) {
             $log.error(reason);
