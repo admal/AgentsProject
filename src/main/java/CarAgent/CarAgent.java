@@ -3,12 +3,14 @@ package CarAgent;
 import CarAgent.Behaviours.CheckingFuelBehaviour;
 import CarAgent.Behaviours.MovingBehaviour;
 import CarAgent.Behaviours.ReceivingBehaviour;
+import Common.Abstract.IPosition;
 import Common.AgentClasses.ChargingStation;
 import Common.AgentClasses.TransactionCharger;
 import Common.AgentType;
 import Common.Behaviours.RegisterBehaviour;
-import Common.Abstract.IPosition;
+import Common.GoogleApiHelper.DirectionsClient;
 import Common.Position;
+import Common.Route;
 import jade.core.Agent;
 
 import java.util.ArrayList;
@@ -19,30 +21,21 @@ import java.util.List;
  * Created by adam on 5/3/16.
  */
 public class CarAgent extends Agent {
-    private final int speed = 60;
+    private final int speed = 17; // That's approximate speed represented in m/s
+    private final int powerPercentPerMeeters = 1000; // 1% / 1000m
+    private float chargedPercentage;
+    private boolean inMove = false;
     private IPosition currentPosition;
     private IPosition destination;
     private IPosition chargingPosition;
-    private List<IPosition> route;
-    private MovingBehaviour movingBehaviour;
-    public List<TransactionCharger> chargingStations;
-
-
-    public IPosition getChargingPosition() {
-        return chargingPosition;
-    }
-
-    public void setChargingPosition(IPosition chargingPosition) {
-        this.chargingPosition = chargingPosition; //TODO has to inform the system to change the car for client
-        this.setDestination(chargingPosition);
-    }
-
-    //in percents
-    private float chargedLevel;
-    private boolean inMove = false;
-
+    private List<IPosition> list_route;
+    private Route route;
     private List<ChargingStation> stations;
+    public List<TransactionCharger> chargingStations;
+    private MovingBehaviour movingBehaviour;
 
+    public CarAgent() {}
+    public IPosition getChargingPosition() { return chargingPosition; }
 
     public void UpdateStations(List<ChargingStation> stations)
     {
@@ -57,21 +50,27 @@ public class CarAgent extends Agent {
         return inMove;
     }
 
-    public void setInMove(boolean inMove) {
-        this.inMove = inMove;
+    public void setInMove(boolean inMove) { this.inMove = inMove; }
+
+    public float getChargedPercentage() { return chargedPercentage; }
+
+    public void setChargedPercentage(float chargedPercentage) { this.chargedPercentage = chargedPercentage; }
+
+    public IPosition getCurrentPosition() { return currentPosition; }
+
+    public void setCurrentPosition(IPosition position){
+        this.currentPosition = position;
+        System.out.println(this.getLocalName()+" new position "+this.currentPosition.toString());
     }
 
-    public float getChargedLevel() {
-        return chargedLevel;
-    }
+    public IPosition getDestination() { return destination; }
 
-    public void setChargedLevel(float chargedLevel) {
-        this.chargedLevel = chargedLevel;
-    }
+    public List<IPosition> getList_route() { return this.list_route; }
 
-    public CarAgent()
-    {
+    public int getSpeed() { return speed; }
 
+    public void setChargingPosition(IPosition chargingPosition) {
+        this.chargingPosition = chargingPosition;
     }
 
     @Override
@@ -84,17 +83,17 @@ public class CarAgent extends Agent {
         chargingStations = new ArrayList<TransactionCharger>();
         
         //hardcoded just for debuging
-        this.route = new ArrayList<IPosition>();
-        route.add(new Position(41,40));
-        route.add(new Position(40,40));
-        route.add(new Position(40,39));
-        route.add(new Position(40,38));
-        route.add(new Position(40,37));
-        route.add(new Position(39,36));
-        route.add(new Position(38,35));
+        this.list_route = new ArrayList<IPosition>();
+        list_route.add(new Position(41,40));
+        list_route.add(new Position(40,40));
+        list_route.add(new Position(40,39));
+        list_route.add(new Position(40,38));
+        list_route.add(new Position(40,37));
+        list_route.add(new Position(39,36));
+        list_route.add(new Position(38,35));
 
         System.out.println("Auto: "+ currentPosition);
-        chargedLevel = 90;
+        chargedPercentage = 90;
         Register();
     }
 
@@ -106,14 +105,11 @@ public class CarAgent extends Agent {
         addBehaviour(new CheckingFuelBehaviour(this,1000));
     }
 
-    public IPosition getCurrentPosition() {
-        return currentPosition;
-    }
-    public void setCurrentPosition(IPosition position){ this.currentPosition = position; }
-
     public void setDestination(IPosition destination) {
         this.destination = destination;
         this.inMove = true;
+        this.route = DirectionsClient.getDirectionsToTarget(this, destination);
+        this.currentPosition = this.route.getPoints().get(0);
         this.movingBehaviour = new MovingBehaviour(this,1000);
         addBehaviour(this.movingBehaviour);
     }
@@ -122,11 +118,20 @@ public class CarAgent extends Agent {
         this.inMove = false;
         removeBehaviour(this.movingBehaviour);
     }
-    public IPosition getDestination() {
-        return destination;
+
+    public boolean hasEnoughFuelForTrip(Route route) {
+        return this.chargedPercentage >= route.getDistance()/1000; // From m to km
     }
 
-    public List<IPosition> getRoute() {
-        return this.route;
+    public Route getRoute() {
+        return route;
+    }
+
+    public void setRoute(Route route) {
+        this.route = route;
+    }
+
+    public int getPowerPercentPerMeeters() {
+        return powerPercentPerMeeters;
     }
 }

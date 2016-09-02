@@ -1,7 +1,9 @@
 package ChargerAgent;
 import ChargerAgent.Behaviours.ReceiveMessageBehaviour;
+import ChargerAgent.Behaviours.SendChargedInformationBehaviour;
 import ChargerAgent.Behaviours.UpdateWaitingTimeBehaviour;
 import Common.AgentClasses.ChargingCar;
+import Common.AgentClasses.ChargingStation;
 import Common.AgentType;
 import Common.Behaviours.RegisterBehaviour;
 import Common.Position;
@@ -67,11 +69,12 @@ public class ChargerAgent extends Agent {
             waitingTime -= 1;
             chargingQueue.get(0).setOccupationTime(chargingQueue.get(0).getOccupationTime() - 1);
         }
-        if(chargingQueue.size() != 0)
-            if(chargingQueue.get(0).getOccupationTime() <= 0){
-                System.out.println("car " + chargingQueue.get(0).getAid() +" finished charging, removing from queue");
-                chargingQueue.remove(0);
-                //TODO inform a car that it is fully charged
+        if(chargingQueue.size() != 0) {
+            if (chargingQueue.get(0).getOccupationTime() <= 0) {
+                System.out.println("car " + chargingQueue.get(0).getAid() + " finished charging, removing from queue");
+                ChargingCar chargedCar = chargingQueue.remove(0);
+                this.addBehaviour(new SendChargedInformationBehaviour(this, chargedCar.getAid()));
             }
+        }
     }
 }

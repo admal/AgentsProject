@@ -7,7 +7,6 @@ import Common.AgentClasses.Parking;
 import Common.AgentClasses.TransactionCar;
 import Common.Position;
 import MasterAgent.behaviours.ClientRequestBehaviour;
-import MasterAgent.behaviours.NewClientRequestBehaviour;
 import MasterAgent.behaviours.UpdateBehaviour;
 import jade.core.AID;
 import jade.core.Agent;
@@ -54,7 +53,7 @@ public class MasterAgent extends Agent implements IMasterAgent {
             e.printStackTrace();
         }
         addBehaviour(new ClientRequestBehaviour(this, 2000));  //In a looop read the list of client positions and assign cars
-        clientsLocations.add(new Position(52.25460f,21.03500f));
+        clientsLocations.add(new Position(52.229676f,21.012229f));
     }
 
     public int GetCarSize() {
