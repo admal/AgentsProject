@@ -34,8 +34,7 @@ public class ClientRequestBehaviour extends TickerBehaviour {
                         msg.addReceiver(master.cars.get(i).getAid());
                     }
 
-                    IPosition pos = master.clientsLocations.get(0);
-                    master.clientsLocations.remove(0);
+                    IPosition pos = master.clientsLocations.remove(0);
 
                     master.currentClientPosition = pos; //save the position of a currently handled Client
 

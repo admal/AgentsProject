@@ -4,7 +4,7 @@ import CarAgent.CarAgent;
 import Common.Abstract.ICarHandable;
 import Common.Abstract.IPosition;
 import Common.AgentClasses.TransactionCharger;
-import Common.GoogleApiHelper.Connector;
+import Common.GoogleApiHelper.DurationsClient;
 import com.google.maps.GeoApiContext;
 import com.google.maps.model.Duration;
 import jade.core.AID;
@@ -57,8 +57,8 @@ public class ChargeResponse extends Message implements ICarHandable {
     private TransactionCharger findBestChargingStation(CarAgent car, List<TransactionCharger> chargingStations) {
         IPosition carPos  = car.getCurrentPosition();
         TransactionCharger charger;
-        GeoApiContext gapiContext = Connector.getGeoApiContext();
-        Duration[] reachingDurations = Connector.getChargersReachingDurationsMatrix(gapiContext, carPos, chargingStations);
+        GeoApiContext gapiContext = DurationsClient.getGeoApiContext();
+        Duration[] reachingDurations = DurationsClient.getChargersReachingDurationsMatrix(gapiContext, carPos, chargingStations);
         Long[] waitingTimes = new Long[chargingStations.size()];
 
         //getting waiting queue time and a duration to reach the station
