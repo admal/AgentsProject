@@ -4,11 +4,15 @@ import CarAgent.Behaviours.CheckingFuelBehaviour;
 import CarAgent.Behaviours.MovingBehaviour;
 import CarAgent.Behaviours.ReceivingBehaviour;
 import Common.Abstract.IPosition;
+import Common.Abstract.IStatusSendable;
+import Common.AgentClasses.Car;
 import Common.AgentClasses.ChargingStation;
 import Common.AgentClasses.TransactionCharger;
 import Common.AgentType;
 import Common.Behaviours.RegisterBehaviour;
+import Common.Behaviours.StatusBehaviour;
 import Common.GoogleApiHelper.DirectionsClient;
+import Common.Messages.Status;
 import Common.Position;
 import Common.Route;
 import jade.core.Agent;
@@ -20,7 +24,7 @@ import java.util.List;
 /**
  * Created by adam on 5/3/16.
  */
-public class CarAgent extends Agent {
+public class CarAgent extends Agent implements IStatusSendable {
     private final int speed = 17; // That's approximate speed represented in m/s
     private final int powerPercentPerMeeters = 1000; // 1% / 1000m
     private float chargedPercentage;
@@ -103,6 +107,7 @@ public class CarAgent extends Agent {
         addBehaviour(registerBehaviour);
         addBehaviour(new ReceivingBehaviour(this));
         addBehaviour(new CheckingFuelBehaviour(this,1000));
+        addBehaviour(new StatusBehaviour(this, 5000));
     }
 
     public void setDestination(IPosition destination) {
@@ -133,5 +138,18 @@ public class CarAgent extends Agent {
 
     public int getPowerPercentPerMeeters() {
         return powerPercentPerMeeters;
+    }
+
+    @Override
+    public Status GetStatusMessage() {
+        Status status = new Status();
+        status.type = AgentType.Car;
+        Car carInfo = new Car(this.getAID(), this.getCurrentPosition());
+        carInfo.setChargerPosition(this.getChargingPosition());
+        carInfo.setCharge(this.getChargedPercentage());
+        carInfo.setDestination(this.getDestination());
+
+        status.agentInformation = carInfo;
+        return status;
     }
 }

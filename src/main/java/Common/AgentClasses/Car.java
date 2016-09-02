@@ -3,16 +3,18 @@ package Common.AgentClasses;
 import Common.Abstract.IPosition;
 import jade.core.AID;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by jedrek on 03.05.16.
  */
-public class Car {
+public class Car implements Serializable {
     private AID aid;
     private IPosition position;
     private IPosition destination;
+    private IPosition chargerPosition;
     private float charge;
 
     public AID getAid() {
@@ -50,5 +52,13 @@ public class Car {
 
     public void setCharge(float charge) {
         this.charge = charge;
+    }
+
+    public IPosition getChargerPosition() {
+        return chargerPosition;
+    }
+
+    public void setChargerPosition(IPosition chargerPosition) {
+        this.chargerPosition = chargerPosition;
     }
 }

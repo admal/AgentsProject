@@ -3,6 +3,7 @@ package WebServlets;
 import Common.AgentClasses.Car;
 import Common.AgentType;
 import Common.Position;
+import Common.Starter;
 import Common.WebModels.CarAgentWebModel;
 import MasterAgent.IMasterAgent;
 import com.google.gson.Gson;
@@ -12,6 +13,8 @@ import com.google.maps.GeoApiContext;
 import com.google.maps.PendingResult;
 import com.google.maps.model.DistanceMatrix;
 import com.google.maps.model.Duration;
+import jade.wrapper.AgentController;
+import jade.wrapper.StaleProxyException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -28,7 +31,16 @@ import java.util.List;
 @WebServlet(name = "CarsServlet")
 public class CarsServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        try {
+            Object[] args = new Object[1];
+            args[0] = new Position((float)52.26881, (float)21.04666); //TMP!!!
+            AgentController carAgent = Starter.mainContainer.createNewAgent("auto" + (WebGlobals.getInstance().masterAgent.getCars().size()+1) ,"CarAgent.CarAgent", args);
+            carAgent.start();
+        } catch (StaleProxyException e) {
+            e.printStackTrace();
+            response.sendError(500, "Could not create car agent!");
+        }
+        response.setStatus(HttpServletResponse.SC_CREATED);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -45,33 +57,8 @@ public class CarsServlet extends HttpServlet {
         List<CarAgentWebModel> viewModels = new ArrayList<CarAgentWebModel>();
         for (Car car :
                 cars) {
-            viewModels.add(new CarAgentWebModel(AgentType.Car, car.getPosition(), car.getDestination(), 100, car.getAid().getLocalName()));
+            viewModels.add(new CarAgentWebModel(AgentType.Car, car.getPosition(), car.getDestination(), car.getCharge(), car.getAid().getLocalName()));
         }
-
-//        GeoApiContext gapiContext = new GeoApiContext();
-//        gapiContext.setApiKey("AIzaSyBQsJAcRshc4kGL6FUJLpxJCjBqJvBUQIA");
-//
-//        cars.get(0).setDestination(new Position(52.25469f, 21.03508f)); //set hardcoded charger loaction as destination TODO get/set destinations
-//        String destination = cars.get(0).getDestination().toString();
-//        String origin = cars.get(0).getPosition().toString();
-//
-//        DistanceMatrixApiRequest req = DistanceMatrixApi.getDistanceMatrix(gapiContext, new String[]{origin},
-//                new String[]{destination});
-//
-//
-//        req.setCallback(new PendingResult.Callback<DistanceMatrix>() {
-//            public void onResult(DistanceMatrix distanceMatrix) {
-//                System.out.println("shit works");
-//                System.out.println("distance: " + distanceMatrix.rows[0].elements[0].distance);
-//                System.out.println("duration: " + distanceMatrix.rows[0].elements[0].duration);
-//            }
-//
-//            public void onFailure(Throwable throwable) {
-//                System.out.println("shit's shit");
-//            }
-//        });
-//
-
 
         String retJson = new Gson().toJson(viewModels);
         response.getWriter().write(retJson);

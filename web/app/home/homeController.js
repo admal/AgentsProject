@@ -1,7 +1,7 @@
 /**
  * Created by adam on 6/4/16.
  */
-app.controller('HomeController', function ($scope, uiGmapIsReady, $timeout, $log, AgentsService, AgentsApi) {
+app.controller('HomeController', function ($scope, uiGmapIsReady, $timeout, $log, AgentsService, AgentsApi, ngDialog) {
 //app.controller('HomeController',['$scope', 'AgentsService','uiGmapIsReady' , function ($scope, AgentsService, uiGmapIsReady) {
     var vm = this;
     
@@ -9,20 +9,24 @@ app.controller('HomeController', function ($scope, uiGmapIsReady, $timeout, $log
     vm.stationaryAgents =[];
     vm.carAgents = [];
     vm.clientsCoordinants = [];
-
     function setMarkers()
     {
-        vm.map.markers.length= []; //reset the array
+        vm.map.markers = []; //reset the array
         if(vm.stationaryAgents !== null){
             vm.stationaryAgents.forEach(function(curr, index, arr){
+  
                 vm.map.markers.push(new marker(index,curr.position.x, curr.position.y, "assets/images/ChargingStation.png", curr.name));
             });
         }
         if(vm.carAgents !== null){
             vm.carAgents.forEach(function (curr, index, arr){
                 vm.map.markers.push(new marker(index+vm.stationaryAgents.length,curr.position.x, curr.position.y, "assets/images/Car.png", curr.name));
+                if(curr.destination !== null && angular.isDefined(curr.destination)) {
+                    vm.map.markers.push(new marker(100 + index, curr.destination.x, curr.destination.y, "assets/images/Destination.png", curr.name));
+                }
             });
-            vm.calcRoutes();
+            //vm.calcRoutes();
+            //$log.info('markers', vm.map.markers);
         }
     }
 
@@ -58,12 +62,29 @@ app.controller('HomeController', function ($scope, uiGmapIsReady, $timeout, $log
     };
     uiGmapIsReady.promise().then(function(maps) {});
 
+    vm.addStationClick = function () {
+        ngDialog.open({
+            template: 'app/home/addStationModal.html',
+            className: 'ngdialog-theme-default',
+            controller: 'StationModalController',
+            controllerAs: 'stationModal',
+        });
+    };
     vm.addStation = function(station)
     {
         AgentsApi.AddStation(station, function (response) {
             $log.info(response);
             alert('Station added!');
         }, onError);
+    };
+
+    vm.addClientClick = function() {
+        ngDialog.open({
+            template: 'app/home/addClientModal.html',
+            className: 'ngdialog-theme-default',
+            controller: 'ClientModalController',
+            controllerAs: 'clientModal',
+        });
     };
 
     vm.addClient = function (client) {
@@ -73,6 +94,12 @@ app.controller('HomeController', function ($scope, uiGmapIsReady, $timeout, $log
         }).error(function(){
             vm.errorMsg = "Sth went wrong :(";
         });
+    };
+
+    vm.addCar = function () {
+        AgentsApi.addCar(function (response) {
+            $log.info('car created');
+        }, onError);
     };
 
     function onError(reason) {
@@ -102,3 +129,34 @@ function marker(id, x, y, icon, name) {
         "labelContent": name
     }
 }
+
+
+app.controller('StationModalController', function ($scope, $log, AgentsService, AgentsApi) {
+    var vm = this;
+    vm.addStation = function(station)
+    {
+        AgentsApi.AddStation(station, function (response) {
+            $log.info(response);
+            alert('Station added!');
+            $scope.closeThisDialog();
+        }, function (reason) {
+            $log.error(reason);
+            $scope.closeThisDialog();
+        });
+    };
+});
+
+app.controller('ClientModalController', function ($scope, $log, AgentsService, AgentsApi) {
+    var vm = this;
+    vm.addStation = function(client)
+    {
+        AgentsApi.addClient(client, function (response) {
+            $log.info(response);
+            alert('Client added!');
+            $scope.closeThisDialog();
+        }, function (reason) {
+            $log.error(reason);
+            $scope.closeThisDialog();
+        });
+    };
+});

@@ -1,0 +1,31 @@
+.add-buttons-container{
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    z-index: 10;
+    background: rgba(178, 178, 178, 0.66);
+    padding: 5px;
+}
+.add-button{
+    display: inline-block;
+    margin: 5px 10px;
+    width: 30px;
+    height: 30px;
+
+    -webkit-transition: all .6s;
+    -moz-transition: all .6s;
+    transition: all .6s;
+}
+.add-button.car {
+    background-image: url('../images/Car.png');
+}
+.add-button.station {
+    background-image: url('../images/ChargingStation.png');
+}
+.add-button.client {
+    background-image: url('../images/Call.gif');
+}
+.add-button:hover {
+    background-image: url('../images/Plus.png');
+    cursor: pointer;
+}

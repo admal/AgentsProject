@@ -2,16 +2,18 @@
     <div class="table-responsive">
         <table class="table">
             <colgroup>
-                <col class="col-xs-1" />
+                <col class="col-xs-2" />
                 <col class="col-xs-2" />
             </colgroup>
             <tr>
                 <th>Name</th>
                 <th>Position</th>
+                <th>Address</th>
             </tr>
             <tr ng-repeat="station in stations.stations">
                 <td><img src="assets/images/ChargingStation.png" /> <b>{{station.name}}</b></td>
                 <td>{{station.position}}</td>
+                <td>{{station.address}}</td>
             </tr>
         </table>
     </div>
