@@ -65,8 +65,7 @@ public class CarAgent extends Agent {
     public int getSpeed() { return speed; }
 
     public void setChargingPosition(IPosition chargingPosition) {
-        this.chargingPosition = chargingPosition; //TODO has to inform the system to change the car for client
-        this.setDestination(chargingPosition);
+        this.chargingPosition = chargingPosition;
     }
 
     @Override

@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * Created by jedrek on 25.08.16.
  */
-public class Connector {
+public class DurationsClient {
 
     public static GeoApiContext getGeoApiContext(){
         GeoApiContext gapiContext = new GeoApiContext();
