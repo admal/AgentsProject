@@ -28,7 +28,7 @@ public class DestinationRequest extends Message implements ICarHandable {
         }
         else
         {
-            rejectRequest(agent);
+            rejectRequest(agent, original);
         }
     }
 
@@ -37,7 +37,7 @@ public class DestinationRequest extends Message implements ICarHandable {
         if(agent.hasEnoughFuelForTrip(route))
             acceptRequest(agent, original, route);
         else{
-            rejectRequest(agent);
+            rejectRequest(agent, original);
             makeChargeRequest(agent);
         }
     }
@@ -59,6 +59,7 @@ public class DestinationRequest extends Message implements ICarHandable {
     }
 
     private void acceptRequest(CarAgent agent, ACLMessage original, Route route) {
+        System.out.println("car takes part in transaction " + agent.getLocalName());
         ACLMessage acceptResponse = new ACLMessage(ACLMessage.ACCEPT_PROPOSAL);
         acceptResponse.addReceiver(original.getSender());
         try {
@@ -70,11 +71,13 @@ public class DestinationRequest extends Message implements ICarHandable {
         agent.send(acceptResponse);
     }
 
-    private void rejectRequest(CarAgent agent) {
+    private void rejectRequest(CarAgent agent, ACLMessage original) {
+        System.out.println("car desn't take part in transaction " + agent.getLocalName());
         ACLMessage rejectResponse = new ACLMessage(ACLMessage.REJECT_PROPOSAL);
         rejectResponse.setOntology("DestinationResponse");
+        rejectResponse.addReceiver(original.getSender());
         try {
-            rejectResponse.setContentObject(new DestinationResponse(agent.getCurrentPosition(), agent.getAID(), agent.getDestination()!=null ));
+            rejectResponse.setContentObject(new DestinationResponse(agent.getCurrentPosition(), agent.getAID(), !agent.isInMove() ));
         } catch (IOException e) {
             e.printStackTrace();
         }

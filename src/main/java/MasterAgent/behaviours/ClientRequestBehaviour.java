@@ -23,6 +23,12 @@ public class ClientRequestBehaviour extends TickerBehaviour {
 
     protected void onTick() {
         MasterAgent master = (MasterAgent )myAgent;
+        if(master.currentClientPosition != null)
+            System.out.println(master.currentClientPosition.toString());
+
+        for( IPosition x : master.clientsLocations){
+            System.out.println(x.toString() + " ; ");
+        }
 
         if(!master.clientsLocations.isEmpty()) { //check each iteration if queue is empty
             if(master.currentClientPosition == null) {

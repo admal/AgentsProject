@@ -53,7 +53,6 @@ public class MasterAgent extends Agent implements IMasterAgent {
             e.printStackTrace();
         }
         addBehaviour(new ClientRequestBehaviour(this, 2000));  //In a looop read the list of client positions and assign cars
-        clientsLocations.add(new Position(52.229676f,21.012229f));
     }
 
     public int GetCarSize() {
