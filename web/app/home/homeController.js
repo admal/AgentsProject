@@ -148,7 +148,7 @@ app.controller('StationModalController', function ($scope, $log, AgentsService, 
 
 app.controller('ClientModalController', function ($scope, $log, AgentsService, AgentsApi) {
     var vm = this;
-    vm.addStation = function(client)
+    vm.addClient = function(client)
     {
         AgentsApi.addClient(client, function (response) {
             $log.info(response);

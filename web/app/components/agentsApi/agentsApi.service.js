@@ -53,7 +53,7 @@ app.service("AgentsApi", function($http ) {
         postResource('api/addstation', data, success, error);
     };
 
-    vm.AddClient = function (client) {
+    vm.addClient = function (client) {
         var data = $.param({
             x: client.x,
             y: client.y
