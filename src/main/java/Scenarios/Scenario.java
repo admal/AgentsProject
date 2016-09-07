@@ -32,10 +32,11 @@ public abstract class Scenario {
 
     /**
      * !Important: Only this method should be used to start scenarios!
+     * !Important: Jade Platform has to be started before starting scenarios!
      *
-     * Firstly function checks if there is already started Jade Platform. If platform is not started it starts new agent platform.
-     * If platform is started and flag force is set to false then it throws ScenarioException.
-     * If platform is started and force flag is set to true, it shutdown platform first and then starts new platform with new agents.
+     * Firstly function checks if there is already started Jade Platform container with given scenario. If container is not created it starts new container.
+     * If container is created and flag force is set to false then it throws ScenarioException.
+     * If container is created and force flag is set to true, it shutdown container first and then starts new container with new agents.
      * @param force flag if exeution should be forced
      * @throws ScenarioException
      */
