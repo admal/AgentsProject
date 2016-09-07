@@ -25,9 +25,9 @@ import java.util.List;
  * Created by adam on 5/3/16.
  */
 public class CarAgent extends Agent implements IStatusSendable {
-    private final int speed = 17; // That's approximate speed represented in m/s
-    private final int powerPercentPerMeeters = 1000; // 1% / 1000m
-    private float chargedPercentage;
+    private int speed = 17; // That's approximate speed represented in m/s
+    private int powerPercentPerMeeters = 1000; // 1% / 1000m
+    private float chargedPercentage = 100;
     private boolean inMove = false;
     private IPosition currentPosition;
     private IPosition destination;
@@ -64,7 +64,7 @@ public class CarAgent extends Agent implements IStatusSendable {
 
     public void setCurrentPosition(IPosition position){
         this.currentPosition = position;
-        System.out.println(this.getLocalName()+" new position "+this.currentPosition.toString());
+        //System.out.println(this.getLocalName()+" new position "+this.currentPosition.toString());
     }
 
     public IPosition getDestination() { return destination; }
@@ -82,22 +82,27 @@ public class CarAgent extends Agent implements IStatusSendable {
         super.setup();
         Object[] args = getArguments();
         this.currentPosition= (Position)args[0];
+        if(args.length > 1) {
+            this.speed = (int) args[1];
+            this.powerPercentPerMeeters = (int) args[2];
+            this.chargedPercentage = (float) args[3];
+        }
+
         this.chargingPosition = null;
         this.movingBehaviour = null;
         chargingStations = new ArrayList<TransactionCharger>();
         
         //hardcoded just for debuging
         this.list_route = new ArrayList<IPosition>();
-        list_route.add(new Position(41,40));
-        list_route.add(new Position(40,40));
-        list_route.add(new Position(40,39));
-        list_route.add(new Position(40,38));
-        list_route.add(new Position(40,37));
-        list_route.add(new Position(39,36));
-        list_route.add(new Position(38,35));
+//        list_route.add(new Position(41,40));
+//        list_route.add(new Position(40,40));
+//        list_route.add(new Position(40,39));
+//        list_route.add(new Position(40,38));
+//        list_route.add(new Position(40,37));
+//        list_route.add(new Position(39,36));
+//        list_route.add(new Position(38,35));
 
         System.out.println("Auto: "+ currentPosition);
-        chargedPercentage = 90;
         Register();
     }
 

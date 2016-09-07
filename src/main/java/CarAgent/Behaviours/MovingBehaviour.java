@@ -72,7 +72,7 @@ public class MovingBehaviour extends TickerBehaviour {
     }
 
     private void moveForward() {
-        System.out.println(this.agent.getLocalName()+" moving forward");
+        //System.out.println(this.agent.getLocalName()+" moving forward");
         if(this.checkIfNewSubroute())
             this.changeSubroad();
         IPosition newAgentPosition = this.makeStep();
@@ -92,7 +92,7 @@ public class MovingBehaviour extends TickerBehaviour {
     }
 
     private void changeSubroad() {
-        System.out.println("Changing subroad");
+        //System.out.println("Changing subroad");
         this.current_subroute_end_id++;
         this.step = this.calculateStep();
     }

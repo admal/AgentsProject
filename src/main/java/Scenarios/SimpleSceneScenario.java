@@ -32,7 +32,7 @@ public class SimpleSceneScenario extends Scenario {
         Position tmp3 = new Position(54.35202520000001f, 18.64663840000003f);
         Position tmp4 = new Position(18.64663840000003f, 21.034695499999998f);
         super.agents.add(new CarAgentStartModel(tmp1, 1, 17, 1000, 100));
-        super.agents.add(new CarAgentStartModel(tmp2, 2, 17, 1000, 100));
+        super.agents.add(new CarAgentStartModel(tmp2, 2, 20, 1000, 60));
         super.agents.add(new CarAgentStartModel(tmp3, 3, 17, 1000, 100));
         super.agents.add((new StationAgentStartModel(tmp4, 1)));
     }
