@@ -112,6 +112,7 @@ public abstract class Scenario {
         WebGlobals.getInstance().masterAgent = null;
         this.isStarted = false;
         this.stateDescription = "not started";
+        Scenario.scenarioContainer = null;
         this.Reset();
     }
 
