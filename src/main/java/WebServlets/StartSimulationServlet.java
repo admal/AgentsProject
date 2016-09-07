@@ -39,12 +39,12 @@ public class StartSimulationServlet extends javax.servlet.http.HttpServlet {
             return;
         }
         ArrayList<AgentStartModel> stations = new ArrayList<AgentStartModel>();
-        stations.add(new AgentStartModel(new Position(52.25469f,21.03508f),1));
-        stations.add(new AgentStartModel(new Position(52.23917f, 21.05124f),2));
-        stations.add(new AgentStartModel(new Position( 52.25491f, 21.03487f),3));
+//        stations.add(new AgentStartModel(new Position(52.25469f,21.03508f),1));
+//        stations.add(new AgentStartModel(new Position(52.23917f, 21.05124f),2));
+//        stations.add(new AgentStartModel(new Position( 52.25491f, 21.03487f),3));
 
         ArrayList<AgentStartModel> cars = new ArrayList<AgentStartModel>();
-        cars.add(new AgentStartModel(new Position(52.26881f, 21.04666f),5));
+//        cars.add(new AgentStartModel(new Position(52.26881f, 21.04666f),5));
         WebGlobals.getInstance().masterAgent =  Starter.Start(cars, stations);
     }
 }

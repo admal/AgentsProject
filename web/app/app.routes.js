@@ -9,25 +9,28 @@ app.config(['uiGmapGoogleMapApiProvider', '$stateProvider', '$urlRouterProvider'
     });
 
     $urlRouterProvider.otherwise('/cars');
-    $stateProvider
-        .state('cars',{
+    $stateProvider.state('cars',{
             url: '/cars',
             templateUrl: 'app/cars/cars.html',
             controller: 'CarsController',
             controllerAs: 'cars'
         });
-    $stateProvider
-        .state('stations',{
+    $stateProvider.state('stations',{
             url: '/stations',
             templateUrl: 'app/stations/stations.html',
             controller: 'StationsController',
             controllerAs: 'stations'
         });
-    $stateProvider
-        .state('requests',{
+    $stateProvider.state('requests',{
             url: '/requests',
             templateUrl: 'app/requests/requests.html',
             controller: 'RequestsController',
             controllerAs: 'requests'
         });
+    $stateProvider.state('scenarios', {
+        url: '/scenarios',
+        templateUrl: 'app/scenarios/scenarios.html',
+        controller: 'ScenariosController',
+        controllerAs: 'scenarios'
+    });
 }]);

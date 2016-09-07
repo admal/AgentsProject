@@ -1,6 +1,5 @@
 package Scenarios;
 
-import Common.AgentStartModel;
 import Common.Position;
 import Common.StartModels.CarAgentStartModel;
 import Common.StartModels.StationAgentStartModel;
@@ -14,8 +13,6 @@ import java.util.ArrayList;
  * Simple scenario. There are 3 cars and 1 station. There occurs 1 client request. Car 1 should go there because it is the closest car.
  */
 public class SimpleSceneScenario extends Scenario {
-    private final String name = "SimpleScenario";
-    private final String description = "It is simple scenario, containing just several fully charged cars and 1 station in Targówek.";
     /**
      * It is static to keep track for each scenario if it was not started already.
      */
@@ -23,6 +20,12 @@ public class SimpleSceneScenario extends Scenario {
 
     public SimpleSceneScenario() {
         super();
+        InitData();
+    }
+
+    private void InitData() {
+        super.name = "SimpleScenario";
+        super.description = "It is simple scenario, containing just several fully charged cars and 1 station in Targówek.";
         super.agents = new ArrayList<>();
         Position tmp1 = new Position(52.26849389999999f, 21.046502000000032f);
         Position tmp2 = new Position(52.4044483f, 20.949969699999997f);
@@ -32,29 +35,7 @@ public class SimpleSceneScenario extends Scenario {
         super.agents.add(new CarAgentStartModel(tmp2, 2, 17, 1000, 100));
         super.agents.add(new CarAgentStartModel(tmp3, 3, 17, 1000, 100));
         super.agents.add((new StationAgentStartModel(tmp4, 1)));
-        System.out.println("After 10 seconds client will be added");
     }
-
-    @Override
-    public String getName() {
-        return name;
-    }
-
-    @Override
-    public String getDescription() {
-        return description;
-    }
-
-    @Override
-    public AgentContainer getScenarioContainer() {
-        return SimpleSceneScenario.scenarioContainer;
-    }
-
-    @Override
-    public void setAgentsContainer(AgentContainer container) {
-        SimpleSceneScenario.scenarioContainer = container;
-    }
-
     @Override
     protected void Execute() throws ScenarioOnExectionException {
         super.stateDescription = "started, request will be sent soon...";
@@ -70,5 +51,10 @@ public class SimpleSceneScenario extends Scenario {
                 10000
         );
 
+    }
+
+    @Override
+    protected void Reset() {
+        InitData();
     }
 }

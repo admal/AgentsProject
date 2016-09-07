@@ -31,8 +31,8 @@ public class Starter
         //create master agent
         AgentController masterAgent = null;
         try {
-            masterAgent = mainContainer.createNewAgent("master","MasterAgent.MasterAgent", null);
-            masterAgent.start();
+//            masterAgent = mainContainer.createNewAgent("master","MasterAgent.MasterAgent", null);
+//            masterAgent.start();
             AgentController rmaAgent = mainContainer.createNewAgent("rma", "jade.tools.rma.rma", null);
             rmaAgent.start();
         } catch (StaleProxyException e) {

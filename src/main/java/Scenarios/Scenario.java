@@ -15,20 +15,25 @@ import java.util.List;
  * Created by adam on 9/6/16.
  */
 public abstract class Scenario {
-    protected String stateDescription = "not started";
+    public String stateDescription = "not started";
+
+    public boolean isStarted = false;
+    public String name = "not set";
+    public String description = "not set";
 
     public String getStateDescription() {
         return stateDescription;
     }
 
-    public abstract String getName();
-    public abstract String getDescription();
-    /**
-     * Gets static agents container of object
-     * @return container with agents or null
-     */
-    public abstract AgentContainer getScenarioContainer();
-    public abstract void setAgentsContainer(AgentContainer container);
+    public String getName() {
+        return this.name;
+    }
+    public String getDescription() {
+        return this.description;
+    }
+
+    protected static AgentContainer scenarioContainer = null;
+
 
     /**
      * List of all agents that will be started in the scenario.
@@ -47,7 +52,7 @@ public abstract class Scenario {
      */
     public void Start(boolean force) throws ScenarioException, ScenarioOnExectionException {
         Runtime runtime = Runtime.instance();
-        AgentContainer scenarioContainer = this.getScenarioContainer();
+        AgentContainer scenarioContainer = Scenario.scenarioContainer;
         if(scenarioContainer != null && force) {
             try {
                 scenarioContainer.kill();
@@ -59,8 +64,8 @@ public abstract class Scenario {
             throw new ScenarioException("Scenario is already started!");
         }
 
-        this.setAgentsContainer(runtime.createAgentContainer(new ProfileImpl(null, 8888, this.getName())));
-        scenarioContainer = this.getScenarioContainer();
+        Scenario.scenarioContainer = runtime.createAgentContainer(new ProfileImpl(null, 8889, this.getName()));
+        scenarioContainer = Scenario.scenarioContainer;
         AgentController masterAgent = null;
         try {
             masterAgent = scenarioContainer.createNewAgent("master","MasterAgent.MasterAgent", null);
@@ -93,8 +98,23 @@ public abstract class Scenario {
             throw new ScenarioException("Could not create master agent interface!");
         }
         //start execution of the scenario
+        isStarted = true;
         this.Execute();
     }
 
+    /**
+     * Stops execution of the scenario and clears and removes container.
+     */
+    public void Stop() throws StaleProxyException {
+        Runtime runtime = Runtime.instance();
+        AgentContainer scenarioContainer = Scenario.scenarioContainer;
+        scenarioContainer.kill();
+        WebGlobals.getInstance().masterAgent = null;
+        this.isStarted = false;
+        this.stateDescription = "not started";
+        this.Reset();
+    }
+
     protected abstract void Execute() throws ScenarioOnExectionException;
+    protected abstract void Reset();
 }

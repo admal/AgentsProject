@@ -23,6 +23,14 @@
         <servlet-name>AddClientServlet</servlet-name>
         <servlet-class>WebServlets.AddClientServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ScenarioServlet</servlet-name>
+        <servlet-class>WebServlets.ScenarioServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>StopScenarioServlet</servlet-name>
+        <servlet-class>WebServlets.StopScenarioServlet</servlet-class>
+    </servlet>
 
 
 
@@ -45,5 +53,13 @@
     <servlet-mapping>
         <servlet-name>AddClientServlet</servlet-name>
         <url-pattern>/api/addclient</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ScenarioServlet</servlet-name>
+        <url-pattern>/api/scenario</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>StopScenarioServlet</servlet-name>
+        <url-pattern>/api/scenario/stop</url-pattern>
     </servlet-mapping>
 </web-app>

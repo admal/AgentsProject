@@ -62,5 +62,6 @@
     <script src="app/requests/requests.controller.js"></script>
     <script src="app/cars/cars.controller.js"></script>
     <script src="app/stations/stations.controller.js"></script>
+    <script src="app/scenarios/scenarios.controller.js"></script>
 </body>
 </html>

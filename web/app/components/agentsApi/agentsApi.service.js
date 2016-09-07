@@ -69,9 +69,22 @@ app.service("AgentsApi", function($http ) {
     
     vm.addCar = function(success, error) {
         postResource('api/cars', success, error);
-    }
+    };
 
     vm.startAgentPlatform = function (success, error) {
         getResource('api/start_simulation', success, error);
+    };
+
+    vm.getScenarios = function (success, error) {
+        getResource('api/scenario', success, error);
+    };
+
+    vm.startScenario = function (index, success, error) {
+        postResource('api/scenario', $.param({index: index}), success, error);
+    };
+
+    vm.stopScenario = function (index, success, error) {
+        postResource('api/scenario/stop', $.param({index: index}), success, error);
     }
+
 });

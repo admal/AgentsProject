@@ -41,8 +41,8 @@ app.service("AgentsService", function($interval, AgentsApi, $log){
             $log.info('stations updated');
         }, onApiError);
     };
-
-    var updateWatch = $interval(vm.getAgentsData, 10000); //every 10 sec update
+ 
+    var updateWatch = $interval(vm.getAgentsData, 5000); //every 5 sec update
 
     function onApiError(reason) {
         $log.error(reason);

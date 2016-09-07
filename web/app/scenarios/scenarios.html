@@ -1,0 +1,27 @@
+<div class="row">
+    <div class="table-responsive">
+        <table class="table">
+            <colgroup>
+                <col class="col-xs-1" />
+                <col class="col-xs-4" />
+                <col class="col-xs-2" />
+                <col class="col-xs-1" />
+            </colgroup>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>State</th>
+                <th></th>
+            </tr>
+            <tr ng-repeat="scenario in scenarios.scenarios track by $index">
+                <td><b>{{scenario.name}}</b></td>
+                <td>{{scenario.description}} <br></td>
+                <td>{{scenario.stateDescription}}</td>
+                <td>
+                    <button class="btn btn-success" ng-disabled="scenario.isStarted" ng-click="scenarios.startScenario($index)">Run!</button>
+                    <button class="btn btn-danger" ng-disabled="!scenario.isStarted" ng-click="scenarios.stopScenario($index)">Stop</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
