@@ -49,6 +49,8 @@ public class ChargeResponse extends Message implements ICarHandable {
                 agent.setDestination(bestStation.getPosition());
 
                 agent.send(replyMsg);
+            }else{
+                System.out.println("No station found.");
             }
             agent.chargingStations.clear();
         }
@@ -63,13 +65,19 @@ public class ChargeResponse extends Message implements ICarHandable {
 
         //getting waiting queue time and a duration to reach the station
         ListIterator it = chargingStations.listIterator();
-        int i=0;
+        int i=0, j=0;
         while(it.hasNext()){
             charger = (TransactionCharger) it.next();
-            waitingTimes[i] = charger.getWaitingTime();
-            chargingStations.get(i).setTimeToReach(reachingDurations[i].inSeconds);
-            chargingStations.get(i).setTimeToWait(waitingTimes[i]);
-            i++;
+            waitingTimes[j] = charger.getWaitingTime();
+            if(reachingDurations[j] == null){
+                it.remove();
+                System.out.println("removing station (can't be reached) " + charger.getAid().getLocalName());
+            }else {
+                chargingStations.get(i).setTimeToReach(reachingDurations[j].inSeconds);
+                chargingStations.get(i).setTimeToWait(waitingTimes[j]);
+                i++;
+            }
+            j++;
         }
         //sort charging stations by distance to them
         Collections.sort(chargingStations);

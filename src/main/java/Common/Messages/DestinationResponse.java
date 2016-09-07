@@ -79,10 +79,12 @@ public class DestinationResponse extends Message implements IMasterHandable {
         System.out.println("finding best car for client");
         TransactionCar bestCar = null;
         for(TransactionCar _car : cars){
-            if(bestCar==null)
-                bestCar = _car.isParticipates() ? _car : null;
-            else if(_car.getRoute().getTime() < bestCar.getRoute().getTime() && _car.isParticipates())
-                bestCar = _car;
+            if(_car.isParticipates()) {
+                if (bestCar == null)
+                    bestCar = _car;
+                else if (_car.getRoute().getTime() < bestCar.getRoute().getTime())
+                    bestCar = _car;
+            }
         }
         if (bestCar == null) {
             System.out.println("No suitable car found.");

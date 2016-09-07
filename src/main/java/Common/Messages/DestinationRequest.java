@@ -77,7 +77,7 @@ public class DestinationRequest extends Message implements ICarHandable {
         rejectResponse.setOntology("DestinationResponse");
         rejectResponse.addReceiver(original.getSender());
         try {
-            rejectResponse.setContentObject(new DestinationResponse(agent.getCurrentPosition(), agent.getAID(), !agent.isInMove() ));
+            rejectResponse.setContentObject(new DestinationResponse(agent.getCurrentPosition(), agent.getAID(), false));
         } catch (IOException e) {
             e.printStackTrace();
         }
