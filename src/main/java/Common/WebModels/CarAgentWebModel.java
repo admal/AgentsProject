@@ -21,4 +21,16 @@ public class CarAgentWebModel
     public IPosition destination;
     public float chargeLevel;
     public String name;
+    public int speed;
+    public int fuelBurning;
+
+    public CarAgentWebModel(AgentType type, IPosition position, IPosition destination, float chargeLevel, String name, int speed, int fuelBurning) {
+        this.type = type;
+        this.position = position;
+        this.destination = destination;
+        this.chargeLevel = chargeLevel;
+        this.name = name;
+        this.speed = speed;
+        this.fuelBurning = fuelBurning;
+    }
 }

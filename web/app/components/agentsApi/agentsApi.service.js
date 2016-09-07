@@ -46,7 +46,6 @@ app.service("AgentsApi", function($http ) {
 
     vm.AddStation = function(station, success, error){
         var data = $.param({
-            id: station.id,
             x: station.x,
             y: station.y
         });

@@ -153,6 +153,8 @@ public class CarAgent extends Agent implements IStatusSendable {
         carInfo.setChargerPosition(this.getChargingPosition());
         carInfo.setCharge(this.getChargedPercentage());
         carInfo.setDestination(this.getDestination());
+        carInfo.setSpeed(this.getSpeed());
+        carInfo.setFuelBurning(this.getPowerPercentPerMeeters());
 
         status.agentInformation = carInfo;
         return status;

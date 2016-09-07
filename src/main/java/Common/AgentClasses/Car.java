@@ -16,6 +16,25 @@ public class Car implements Serializable {
     private IPosition destination;
     private IPosition chargerPosition;
     private float charge;
+    private int speed;
+
+    public int getFuelBurning() {
+        return fuelBurning;
+    }
+
+    public void setFuelBurning(int fuelBurning) {
+        this.fuelBurning = fuelBurning;
+    }
+
+    public int getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(int speed) {
+        this.speed = speed;
+    }
+
+    private int fuelBurning;
 
     public AID getAid() {
         return aid;

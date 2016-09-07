@@ -19,8 +19,8 @@ public class AddStationServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         float x = Float.parseFloat(request.getParameter("x"));
         float y = Float.parseFloat(request.getParameter("y"));
-        int id = Integer.parseInt(request.getParameter("id"));
-
+        //int id = Integer.parseInt(request.getParameter("id"));
+        int id = WebGlobals.getInstance().masterAgent.getChargingStations().size() + 1;
         //creating agent
         try {
             Object[] args = new Object[1];

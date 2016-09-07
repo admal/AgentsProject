@@ -5,17 +5,23 @@
                 <col class="col-xs-1" />
                 <col class="col-xs-2" />
                 <col class="col-xs-2" />
+                <col class="col-xs-2" />
+                <col class="col-xs-2" />
             </colgroup>
             <tr>
                 <th>Name</th>
                 <th>Position</th>
                 <th>Destination</th>
+                <th>Speed</th>
+                <th>Burning</th>
                 <th>Fuel level</th>
             </tr>
             <tr ng-repeat="car in cars.cars">
                 <td><img src="assets/images/Car.png" /> <b>{{car.name}}</b></td>
                 <td>{{car.position}} <br> {{car.positionAddress}}</td>
                 <td>{{car.destination}} <br> {{car.destinationAddress}}</td>
+                <td>{{car.speed}} [m/s]</td>
+                <td>1%/{{car.fuelBurning}}m</td>
                 <td>
                     <div class="progress">
                         <div class="progress-bar progress-bar-striped active"

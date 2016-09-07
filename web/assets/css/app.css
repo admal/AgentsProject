@@ -29,3 +29,8 @@
     background-image: url('../images/Plus.png');
     cursor: pointer;
 }
+
+.dialog-content {
+    width: 90%;
+    margin: 0 auto;
+}
