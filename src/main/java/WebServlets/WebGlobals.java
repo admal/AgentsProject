@@ -1,6 +1,7 @@
 package WebServlets;
 
 import MasterAgent.IMasterAgent;
+import Scenarios.RechargeSceneScenario;
 import Scenarios.Scenario;
 import Scenarios.SimpleSceneScenario;
 
@@ -18,7 +19,9 @@ public class WebGlobals
     protected WebGlobals(){
         scenarios = new ArrayList<>();
         scenarios.add(new SimpleSceneScenario());
+        scenarios.add(new RechargeSceneScenario());
     }
+
     public static WebGlobals getInstance()
     {
         if (instance == null)
