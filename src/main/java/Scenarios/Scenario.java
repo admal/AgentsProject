@@ -15,6 +15,11 @@ import java.util.List;
  * Created by adam on 9/6/16.
  */
 public abstract class Scenario {
+    protected String stateDescription = "not started";
+
+    public String getStateDescription() {
+        return stateDescription;
+    }
 
     public abstract String getName();
     public abstract String getDescription();

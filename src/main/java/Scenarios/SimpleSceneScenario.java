@@ -57,11 +57,14 @@ public class SimpleSceneScenario extends Scenario {
 
     @Override
     protected void Execute() throws ScenarioOnExectionException {
+        super.stateDescription = "started, request will be sent soon...";
         new java.util.Timer().schedule(
                 new java.util.TimerTask() {
                     @Override
                     public void run() {
-                        WebGlobals.getInstance().masterAgent.addClientLocation(new Position(52.2296756f,21.012228700000037f));
+                        Position reqPos = new Position(52.2296756f,21.012228700000037f);
+                        WebGlobals.getInstance().masterAgent.addClientLocation(reqPos);
+                        SimpleSceneScenario.super.stateDescription = "Request sent at: " +  reqPos.toString();
                     }
                 },
                 10000
