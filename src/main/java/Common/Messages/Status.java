@@ -25,6 +25,8 @@ public class Status extends Message implements IMasterHandable {
                         car.setCharge(carInfo.getCharge());
                         car.setChargerPosition(carInfo.getChargerPosition());
                         car.setPosition(carInfo.getPosition());
+                        car.setSpeed(carInfo.getSpeed());
+                        car.setFuelBurning(carInfo.getFuelBurning());
                     }
                 }
                 break;

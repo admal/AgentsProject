@@ -1,9 +1,11 @@
-<form class="form-horizontal">
-    <div class="form-group">
-        <label for="clientX">X:</label>  <input id="clientX" class="form-control" type="text" ng-model="clientModal.client.x"  ng-required/>
-    </div>
-    <div class="form-group">
-        <label for="clientY">Y:</label>  <input id="clientY" class="form-control" type="text" ng-model="clientModal.client.y" ng-required />
-    </div>
-    <button class="btn btn-info" ng-click="clientModal.addClient(clientModal.client)">Add client</button>
-</form>
+<div class="dialog-content">
+    <form class="form-horizontal">
+        <div class="form-group">
+            <label for="clientX">X:</label>  <input id="clientX" class="form-control" type="text" ng-model="clientModal.client.x"  ng-required/>
+        </div>
+        <div class="form-group">
+            <label for="clientY">Y:</label>  <input id="clientY" class="form-control" type="text" ng-model="clientModal.client.y" ng-required />
+        </div>
+        <button class="btn btn-info" ng-click="clientModal.addClient(clientModal.client)">Add client</button>
+    </form>
+</div>
