@@ -30,27 +30,22 @@ public class ClientRequestBehaviour extends TickerBehaviour {
             System.out.println(x.toString() + " ; ");
         }
 
-        if(!master.clientsLocations.isEmpty()) { //check each iteration if queue is empty
-            if(master.currentClientPosition == null) {
-                if (master.cars.size() == 0)
-                    return;
-                ACLMessage msg = new ACLMessage(ACLMessage.REQUEST);
-                try {
-                    for (int i = 0; i < master.cars.size(); i++) {
-                        msg.addReceiver(master.cars.get(i).getAid());
-                    }
-
-                    IPosition pos = master.clientsLocations.remove(0);
-
-                    master.currentClientPosition = pos; //save the position of a currently handled Client
-
-                    msg.setContentObject(new DestinationRequest(pos));
-                } catch (IOException e) {
-                    e.printStackTrace();
+        if(!master.clientsLocations.isEmpty() || master.currentClientPosition != null) { //check each iteration if queue is empty
+           if(master.currentClientPosition == null && !master.clientsLocations.isEmpty()) {
+               master.currentClientPosition = master.clientsLocations.remove(0);
+           }
+            ACLMessage msg = new ACLMessage(ACLMessage.REQUEST);
+            try {
+                for (int i = 0; i < master.cars.size(); i++) {
+                    msg.addReceiver(master.cars.get(i).getAid());
                 }
-                System.out.println("Sending position of a new client to all cars");
-                myAgent.send(msg);
+
+                msg.setContentObject(new DestinationRequest( master.currentClientPosition));
+            } catch (IOException e) {
+                e.printStackTrace();
             }
+            System.out.println("Sending position of a new client to all cars");
+            myAgent.send(msg);
         }
     }
 

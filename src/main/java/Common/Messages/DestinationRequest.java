@@ -34,7 +34,7 @@ public class DestinationRequest extends Message implements ICarHandable {
 
     private void handleCarAvailable(CarAgent agent, ACLMessage original) {
         Route route = DirectionsClient.getDirectionsToTarget(agent, this.clientPosition);
-        if(agent.hasEnoughFuelForTrip(route))
+        if(agent.hasEnoughFuelForTrip(route) && agent.getChargedPercentage() >= 20f)
             acceptRequest(agent, original, route);
         else{
             rejectRequest(agent, original);

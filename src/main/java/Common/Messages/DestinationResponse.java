@@ -65,8 +65,10 @@ public class DestinationResponse extends Message implements IMasterHandable {
                     }
                 }
                 agent.send(replyMsg);
-                agent.currentClientPosition = null;
-
+                if(!agent.clientsLocations.isEmpty())
+                    agent.currentClientPosition = agent.clientsLocations.remove(0);
+                else
+                    agent.currentClientPosition = null;
             } else {
                 System.out.println("There are currently no cars available.");
             }

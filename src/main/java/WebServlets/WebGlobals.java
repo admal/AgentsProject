@@ -1,9 +1,7 @@
 package WebServlets;
 
 import MasterAgent.IMasterAgent;
-import Scenarios.RechargeSceneScenario;
-import Scenarios.Scenario;
-import Scenarios.SimpleSceneScenario;
+import Scenarios.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +18,8 @@ public class WebGlobals
         scenarios = new ArrayList<>();
         scenarios.add(new SimpleSceneScenario());
         scenarios.add(new RechargeSceneScenario());
+        scenarios.add(new ClientQueueScenario());
+        scenarios.add(new FullChargeScenario());
     }
 
     public static WebGlobals getInstance()

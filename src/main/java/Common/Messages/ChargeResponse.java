@@ -4,6 +4,7 @@ import CarAgent.CarAgent;
 import Common.Abstract.ICarHandable;
 import Common.Abstract.IPosition;
 import Common.AgentClasses.TransactionCharger;
+import Common.GoogleApiHelper.DirectionsClient;
 import Common.GoogleApiHelper.DurationsClient;
 import com.google.maps.GeoApiContext;
 import com.google.maps.model.Duration;
@@ -30,7 +31,7 @@ public class ChargeResponse extends Message implements ICarHandable {
 
     public void Handle(CarAgent agent, ACLMessage original) {
         agent.chargingStations.add(new TransactionCharger(aid, waitingTime, chargerPosition)); //charging station
-        long time = (long)((100 - agent.getChargedPercentage()) * 30); //each percent requires reservation for 30 sec
+        long time = (long)((100 - agent.getChargedPercentage()) * 1); //each percent requires reservation for 1 sec TODO change back to 30 sec after presentation
         if(agent.chargingStations.size() == agent.getStations().size()){
             //Chooses the best charging station and sends the time reservation
             System.out.println("Looking for the best charging station.");
@@ -69,10 +70,10 @@ public class ChargeResponse extends Message implements ICarHandable {
         while(it.hasNext()){
             charger = (TransactionCharger) it.next();
             waitingTimes[j] = charger.getWaitingTime();
-            if(reachingDurations[j] == null){
+            if (reachingDurations[j] == null ) {
                 it.remove();
                 System.out.println("removing station (can't be reached) " + charger.getAid().getLocalName());
-            }else {
+            } else {
                 chargingStations.get(i).setTimeToReach(reachingDurations[j].inSeconds);
                 chargingStations.get(i).setTimeToWait(waitingTimes[j]);
                 i++;

@@ -65,11 +65,12 @@ public class ChargerAgent extends Agent {
         }
     }
     public void onTick(){
-        if(waitingTime-1>=0) {
-            waitingTime -= 1;
-            chargingQueue.get(0).setOccupationTime(chargingQueue.get(0).getOccupationTime() - 1);
-        }
         if(chargingQueue.size() != 0) {
+            if(waitingTime-1>=0) {
+                waitingTime -= 1;
+                chargingQueue.get(0).setOccupationTime(chargingQueue.get(0).getOccupationTime() - 1);
+                System.out.println("charging car "+chargingQueue.get(0).getAid().getLocalName() + " for next "+chargingQueue.get(0).getOccupationTime());
+            }
             if (chargingQueue.get(0).getOccupationTime() <= 0) {
                 System.out.println("car " + chargingQueue.get(0).getAid() + " finished charging, removing from queue");
                 ChargingCar chargedCar = chargingQueue.remove(0);
