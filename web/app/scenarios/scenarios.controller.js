@@ -11,7 +11,7 @@ function ScenariosController($interval, $log, AgentsApi, AgentsService) {
 
     function getScenarios() {
         AgentsApi.getScenarios(function (response) {
-            $log.info('scenarios', response.data);
+            //$log.info('scenarios', response.data);
             vm.scenarios = response.data;
         }, function (response) {
             $log.error('Api error', response);
@@ -19,7 +19,6 @@ function ScenariosController($interval, $log, AgentsApi, AgentsService) {
     }
 
     vm.startScenario = function (index) {
-        $log.info(index);
         AgentsApi.startScenario(index, function (response) {
             getScenarios();
             AgentsService.getAgentsData();
@@ -31,7 +30,6 @@ function ScenariosController($interval, $log, AgentsApi, AgentsService) {
     };
 
     vm.stopScenario = function (index) {
-        $log.info(index);
         AgentsApi.stopScenario(index, function (response) {
             getScenarios();
             AgentsService.getAgentsData();

@@ -3,7 +3,7 @@
  */
 app.service("AgentsApi", function($http ) {
     var vm = this;
-    var baseUrl = 'http://localhost:1337/';
+    var baseUrl = 'http://localhost:8080/';
 
     /**
      * Sends GET request to server with given url

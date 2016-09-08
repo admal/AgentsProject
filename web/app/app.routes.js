@@ -8,7 +8,7 @@ app.config(['uiGmapGoogleMapApiProvider', '$stateProvider', '$urlRouterProvider'
         libraries: 'weather,geometry,visualization, places, directions'
     });
 
-    $urlRouterProvider.otherwise('/cars');
+    $urlRouterProvider.otherwise('/scenarios');
     $stateProvider.state('cars',{
             url: '/cars',
             templateUrl: 'app/cars/cars.html',

@@ -13,6 +13,6 @@ function CarsController($scope, $log, AgentsService) {
         return AgentsService.cars;
     }, function (newVal, oldVal) {
         vm.cars = AgentsService.cars;
-        $log.info(vm.cars);
+        //$log.info(vm.cars);
     }, true);
 }
