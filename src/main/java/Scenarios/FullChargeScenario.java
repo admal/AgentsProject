@@ -3,6 +3,7 @@ package Scenarios;
 import Common.Position;
 import Common.StartModels.CarAgentStartModel;
 import Common.StartModels.StationAgentStartModel;
+import WebServlets.WebGlobals;
 
 import java.util.ArrayList;
 
@@ -18,29 +19,32 @@ public class FullChargeScenario extends Scenario {
 
     private void InitData() {
         super.name = "FullRechargeScenario";
-        super.description = "A car performs a recharge at the station.";
+        super.description = "A car performs a recharge at the station, then goes to a client which was waiting the whole time";
         super.agents = new ArrayList<>();
-        Position cp1 = new Position(52.26849389999999f, 21.046502000000032f);
-        Position cp2 = new Position(52.20f, 21.15663840000003f);
-        Position cp3 = new Position(52.16849389999999f, 21.146502000000032f);
-        Position tmp3 = new Position(52.23202520000001f, 21.123663840000003f);
-        Position tmp4 = new Position(52.20663840000003f, 21.134695499999998f);
-        Position tmp5 = new Position(52.24663840000003f, 20.14495499999998f);
-        super.agents.add(new CarAgentStartModel(cp1, 1, 17, 1000, 15f));
-        super.agents.add(new CarAgentStartModel(cp2, 2, 17, 1000, 30f));
-        super.agents.add(new CarAgentStartModel(cp3, 3, 17, 1000, 70f));
-        super.agents.add((new StationAgentStartModel(tmp3, 1)));
-        super.agents.add((new StationAgentStartModel(tmp4, 2)));
-        super.agents.add((new StationAgentStartModel(tmp5, 3)));
+        Position cp1 = new Position(52.25469f, 21.03508f);
+        Position tmp1 = new Position(52.25673f, 21.03508f);
+        super.agents.add(new CarAgentStartModel(cp1, 1, 17, 1000, 19f));
+        super.agents.add((new StationAgentStartModel(tmp1, 1)));
     }
 
     @Override
     protected void Execute() throws ScenarioOnExectionException {
-
+        super.stateDescription = "started, request will be sent soon...";
+        new java.util.Timer().schedule(
+                new java.util.TimerTask() {
+                    @Override
+                    public void run() {
+                        Position reqPos = new Position(52.31296756f,21.122228700000037f);
+                        WebGlobals.getInstance().masterAgent.addClientLocation(reqPos);
+                        FullChargeScenario.super.stateDescription = "Request sent at: " +  reqPos.toString();
+                    }
+                },
+                10000
+        );
     }
 
     @Override
     protected void Reset() {
-
+        InitData();
     }
 }

@@ -19,25 +19,22 @@ public class CheckingFuelBehaviour extends TickerBehaviour {
 
     protected void onTick() {
         CarAgent carAgent = (CarAgent)myAgent;
-        if(carAgent.isInMove())
+        if (carAgent.getChargedPercentage() < 20 && carAgent.getChargingPosition() == null)
         {
-            if (carAgent.getChargedPercentage() < 20 && carAgent.getChargingPosition() == null)
-            {
-                ChargeRequest request = new ChargeRequest(carAgent.getAID());
-                ACLMessage requestMessage = new ACLMessage(ACLMessage.REQUEST);
+            ChargeRequest request = new ChargeRequest(carAgent.getAID());
+            ACLMessage requestMessage = new ACLMessage(ACLMessage.REQUEST);
 
-                for (ChargingStation station : carAgent.getStations()) {
-                    requestMessage.addReceiver(station.getAid());
-                }
-                
-                try {
-                    requestMessage.setContentObject(request);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                carAgent.send(requestMessage);
-                System.out.println(carAgent.getLocalName() + ": sent charging request");
+            for (ChargingStation station : carAgent.getStations()) {
+                requestMessage.addReceiver(station.getAid());
             }
+
+            try {
+                requestMessage.setContentObject(request);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            carAgent.send(requestMessage);
+            System.out.println(carAgent.getLocalName() + ": sent charging request");
         }
     }
 }

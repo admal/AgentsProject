@@ -43,7 +43,6 @@ public class DestinationResponse extends Message implements IMasterHandable {
     public void Handle(MasterAgent agent, ACLMessage msg) {
         this.agent = agent;
         agent.carsInCurrentTransaction.add(new TransactionCar(this.aid, this.position, this.route, this.participate));
-        System.out.println("current cars in transaction: " + agent.carsInCurrentTransaction.size());
 
         if (agent.carsInCurrentTransaction.size() == agent.cars.size()) {
             AID bestCar = getBestCarAID(agent.carsInCurrentTransaction);
