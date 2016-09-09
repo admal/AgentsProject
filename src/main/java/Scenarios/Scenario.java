@@ -1,7 +1,9 @@
 package Scenarios;
 
-import Common.AgentStartModel;
+import Common.StartModels.AgentStartModel;
 import MasterAgent.IMasterAgent;
+import Scenarios.Exceptions.ScenarioException;
+import Scenarios.Exceptions.ScenarioOnExectionException;
 import WebServlets.WebGlobals;
 import jade.core.ProfileImpl;
 import jade.core.Runtime;

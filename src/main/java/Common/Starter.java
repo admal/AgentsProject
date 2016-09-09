@@ -1,5 +1,6 @@
 package Common;
 
+import Common.StartModels.AgentStartModel;
 import MasterAgent.IMasterAgent;
 import jade.core.ProfileImpl;
 import jade.core.Runtime;

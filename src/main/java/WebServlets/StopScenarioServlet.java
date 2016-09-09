@@ -1,7 +1,5 @@
 package WebServlets;
 
-import Scenarios.ScenarioException;
-import Scenarios.ScenarioOnExectionException;
 import com.google.gson.Gson;
 import jade.wrapper.StaleProxyException;
 

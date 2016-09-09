@@ -1,5 +1,8 @@
-package Scenarios;
+package Scenarios.ScenarioTests;
 
+import Scenarios.Exceptions.ScenarioException;
+import Scenarios.Exceptions.ScenarioOnExectionException;
+import Scenarios.SimpleSceneScenario;
 import jade.core.Runtime;
 import jade.core.ProfileImpl;
 import jade.wrapper.AgentController;

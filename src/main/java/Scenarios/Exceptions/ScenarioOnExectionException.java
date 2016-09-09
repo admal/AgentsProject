@@ -1,4 +1,4 @@
-package Scenarios;
+package Scenarios.Exceptions;
 
 /**
  * Created by adam on 9/6/16.

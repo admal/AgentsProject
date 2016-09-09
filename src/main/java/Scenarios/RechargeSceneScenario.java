@@ -1,11 +1,10 @@
 package Scenarios;
 
-import ChargerAgent.ChargerAgent;
 import Common.Position;
 import Common.StartModels.CarAgentStartModel;
 import Common.StartModels.StationAgentStartModel;
+import Scenarios.Exceptions.ScenarioOnExectionException;
 import WebServlets.WebGlobals;
-import jade.wrapper.AgentContainer;
 
 import java.util.ArrayList;
 

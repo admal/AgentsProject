@@ -1,9 +1,8 @@
 package WebServlets;
 
 
-import Common.Position;
-import Scenarios.ScenarioException;
-import Scenarios.ScenarioOnExectionException;
+import Scenarios.Exceptions.ScenarioException;
+import Scenarios.Exceptions.ScenarioOnExectionException;
 import com.google.gson.Gson;
 
 import javax.servlet.ServletException;

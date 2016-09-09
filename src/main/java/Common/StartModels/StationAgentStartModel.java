@@ -1,7 +1,6 @@
 package Common.StartModels;
 
 import Common.Abstract.IPosition;
-import Common.AgentStartModel;
 
 /**
  * Created by adam on 9/7/16.
